@@ -1,39 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>My CS180 Portfolio</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            background: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: #333;
+        }
+        header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
         }
         h1 {
-            color: #333;
+            margin: 0;
         }
         ul {
             list-style: none;
             padding: 0;
+            margin-top: 20px;
         }
         li {
-            margin: 8px 0;
+            background: white;
+            margin: 12px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.1s ease;
+        }
+        li:hover {
+            transform: scale(1.02);
         }
         a {
             text-decoration: none;
-            color: #0066cc;
-        }
-        a:hover {
-            text-decoration: underline;
+            color: #2c3e50;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to My CS180 Portfolio!</h1>
-    <p>Select a project below:</p>
-    <ul>
-        <li><a href="./Project_0/index.html">Project 0: Camera & Perspective</a></li>
-        <li><a href="./Project_1/index.html">Project 1 (coming soon)</a></li>
-        <li><a href="./Project_2/index.html">Project 2 (coming soon)</a></li>
-    </ul>
+    <header>
+        <h1>Welcome to My CS180 Portfolio</h1>
+        <p>By [Your Name]</p>
+    </header>
+    <main>
+        <p>Select a project below:</p>
+        <ul>
+            <li><a href="./Project_0/index.html">Project 0: Camera & Perspective</a></li>
+            <li><a href="./Project_1/index.html">Project 1 (coming soon)</a></li>
+            <li><a href="./Project_2/index.html">Project 2 (coming soon)</a></li>
+        </ul>
+    </main>
 </body>
 </html>
