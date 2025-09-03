@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My CS180 Portfolio</title>
+    <title>Project 0: Camera & Perspective</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -10,56 +10,75 @@
             padding: 0;
             background: #f5f7fa;
             color: #333;
+            line-height: 1.6;
         }
         header {
-            background: #2c3e50;
+            background: #34495e;
             color: white;
             padding: 20px;
             text-align: center;
         }
         main {
-            max-width: 800px;
+            max-width: 900px;
             margin: 30px auto;
             padding: 0 20px;
         }
-        h1 {
-            margin: 0;
+        h1, h2 {
+            margin-top: 30px;
+            color: #2c3e50;
         }
-        ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
         }
-        li {
-            background: white;
-            margin: 12px 0;
-            padding: 15px;
+        .gallery img {
+            max-width: 280px;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: transform 0.1s ease;
+            transition: transform 0.2s ease;
         }
-        li:hover {
-            transform: scale(1.02);
+        .gallery img:hover {
+            transform: scale(1.03);
         }
-        a {
-            text-decoration: none;
-            color: #2c3e50;
-            font-weight: bold;
+        footer {
+            margin-top: 40px;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to My CS180 Portfolio</h1>
-        <p>By Max Yen</p>
+        <h1>Project 0: Camera & Perspective</h1>
     </header>
     <main>
-        <p>Select a project below:</p>
-        <ul>
-            <li><a href="./Project_0/index.html">Project 0: Camera & Perspective</a></li>
-            <li><a href="./Project_1/index.html">Project 1 (coming soon)</a></li>
-            <li><a href="./Project_2/index.html">Project 2 (coming soon)</a></li>
-        </ul>
+        <h2>Part 1: Selfie Comparison</h2>
+        <p>Close vs. stepped-back selfies, showing distortion from perspective.</p>
+        <div class="gallery">
+            <img src="./Selfie_1.jpg" alt="Selfie 1">
+            <img src="./Selfie_2.jpg" alt="Selfie 2">
+            <img src="./Selfie_3.jpg" alt="Selfie 3">
+            <img src="./Selfie_4.jpg" alt="Selfie 4">
+        </div>
+
+        <h2>Part 2: Street Perspective</h2>
+        <p>Wide vs. zoomed-in street view, illustrating perspective compression.</p>
+        <div class="gallery">
+            <img src="./Street_1.jpg" alt="Street 1">
+            <img src="./Street_2.jpg" alt="Street 2">
+        </div>
+
+        <h2>Part 3: Dolly Zoom</h2>
+        <p>The classic "Vertigo shot" effect, created by moving back while zooming in.</p>
+        <img src="./Dolly.gif" alt="Dolly Zoom GIF">
+
+        <footer>
+            <p><a href="../index.html">← Back to Home</a></p>
+        </footer>
     </main>
 </body>
 </html>
