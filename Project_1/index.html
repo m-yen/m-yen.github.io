@@ -148,6 +148,110 @@
             <p class="mb-6 text-slate-600">This section allows you to compare the original image with the results of Pyramid L2 and Pyramid NCC alignment methods side-by-side.</p>
 
             <div class="space-y-10">
+                <!-- Comparison for cathedral.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: cathedral.jpg</h3>
+                        <img src="./original_images/cathedral.jpg" alt="Original cathedral.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: cathedral.jpg</h3>
+                        <img src="./pyramid_l2/cathedral_aligned.jpg" alt="cathedral.jpg aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=5)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=12)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: cathedral.jpg</h3>
+                        <img src="./pyramid_ncc/cathedral_aligned.jpg" alt="cathedral.jpg aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=5)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=12)</p>
+                    </div>
+                </div>
+
+                <!-- Comparison for extra_1.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: extra_1.jpg</h3>
+                        <img src="./original_images/extra_1.jpg" alt="Original extra_1.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: extra_1.jpg</h3>
+                        <img src="./pyramid_l2/extra_1_aligned.jpg" alt="extra_1.jpg aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=8)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=16)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: extra_1.jpg</h3>
+                        <img src="./pyramid_ncc/extra_1_aligned.jpg" alt="extra_1.jpg aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=8)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=16)</p>
+                    </div>
+                </div>
+
+                <!-- Comparison for extra_2.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: extra_2.jpg</h3>
+                        <img src="./original_images/extra_2.jpg" alt="Original extra_2.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: extra_2.jpg</h3>
+                        <img src="./pyramid_l2/extra_2_aligned.jpg" alt="extra_2.jpg aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=1, dy=4)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=1, dy=10)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: extra_2.jpg</h3>
+                        <img src="./pyramid_ncc/extra_2_aligned.jpg" alt="extra_2.jpg aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=1, dy=4)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=1, dy=10)</p>
+                    </div>
+                </div>
+
+                <!-- Comparison for monastery.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: monastery.jpg</h3>
+                        <img src="./original_images/monastery.jpg" alt="Original monastery.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: monastery.jpg</h3>
+                        <img src="./pyramid_l2/monastery_aligned.jpg" alt="monastery.jpg aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=-3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=2, dy=3)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: monastery.jpg</h3>
+                        <img src="./pyramid_ncc/monastery_aligned.jpg" alt="monastery.jpg aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=-3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=2, dy=3)</p>
+                    </div>
+                </div>
+
+                <!-- Comparison for tobolsk.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: tobolsk.jpg</h3>
+                        <img src="./original_images/tobolsk.jpg" alt="Original tobolsk.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: tobolsk.jpg</h3>
+                        <img src="./pyramid_l2/tobolsk_aligned.jpg" alt="tobolsk.jpg aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=3, dy=3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=7)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: tobolsk.jpg</h3>
+                        <img src="./pyramid_ncc/tobolsk_aligned.jpg" alt="tobolsk.jpg aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=3, dy=3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=6)</p>
+                    </div>
+                </div>
                 <!-- Comparison for church.tif -->
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
