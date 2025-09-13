@@ -72,6 +72,9 @@
         .comparison-item {
             text-align: center;
         }
+        .pyramid-comparison-image {
+            max-width: 50%; /* Limits the size of pyramid comparison images */
+        }
     </style>
 </head>
 <body>
@@ -145,20 +148,20 @@
         </div>
 
         <div class="project-comparison">
-            <h2>Naive Version Comparison (L2 vs. NCC)</h2>
+            <h2>Naive Version Comparison</h2>
             <p>Here is a side-by-side comparison of the alignment results using the naive (brute-force) method, contrasting the L2 distance (Sum of Squared Differences) with Normalized Cross-Correlation (NCC) as the alignment metric. NCC generally provides a more robust alignment by being invariant to changes in brightness and contrast.</p>
             
             <h3>`tobolsk.jpg`</h3>
             <div class="comparison-grid">
                 <div class="comparison-item">
-                    <h4>L2 Result (output_2)</h4>
+                    <h4>L2 Result</h4>
                     <img src="output_2/tobolsk_aligned.jpg" alt="Tobolsk L2 aligned image (Naive)">
                     <div class="offsets-box">
                         <p>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=7)</p>
                     </div>
                 </div>
                 <div class="comparison-item">
-                    <h4>NCC Result (output_4)</h4>
+                    <h4>NCC Result</h4>
                     <img src="output_4/tobolsk_aligned.jpg" alt="Tobolsk NCC aligned image (Naive)">
                     <div class="offsets-box">
                         <p>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=7)</p>
@@ -169,14 +172,14 @@
             <h3>`cathedral.jpg`</h3>
             <div class="comparison-grid">
                 <div class="comparison-item">
-                    <h4>L2 Result (output_2)</h4>
+                    <h4>L2 Result</h4>
                     <img src="output_2/cathedral_aligned.jpg" alt="Cathedral L2 aligned image (Naive)">
                     <div class="offsets-box">
                         <p>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
                     </div>
                 </div>
                 <div class="comparison-item">
-                    <h4>NCC Result (output_4)</h4>
+                    <h4>NCC Result</h4>
                     <img src="output_4/cathedral_aligned.jpg" alt="Cathedral NCC aligned image (Naive)">
                     <div class="offsets-box">
                         <p>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
@@ -184,17 +187,35 @@
                 </div>
             </div>
 
+            <h3>`extra.jpg`</h3>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h4>L2 Result</h4>
+                    <img src="output_2/extra_2.jpg" alt="Extra aligned image (Naive)">
+                    <div class="offsets-box">
+                        <p>Green displacement: (dx=2, dy=8)<br>Red displacement: (dx=3, dy=16)</p>
+                    </div>
+                </div>
+                <div class="comparison-item">
+                    <h4>NCC Result (output_4)</h4>
+                    <img src="output_4/extra_2.jpg" alt="Extra aligned image (Naive)">
+                    <div class="offsets-box">
+                        <p>Green displacement: (dx=2, dy=8)<br>Red displacement: (dx=3, dy=16)</p>
+                    </div>
+                </div>
+            </div>
+
             <h3>`monastery.jpg`</h3>
             <div class="comparison-grid">
                 <div class="comparison-item">
-                    <h4>L2 Result (output_2)</h4>
+                    <h4>L2 Result</h4>
                     <img src="output_2/monastery_aligned.jpg" alt="Monastery L2 aligned image (Naive)">
                     <div class="offsets-box">
                         <p>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
                     </div>
                 </div>
                 <div class="comparison-item">
-                    <h4>NCC Result (output_4)</h4>
+                    <h4>NCC Result</h4>
                     <img src="output_4/monastery_aligned.jpg" alt="Monastery NCC aligned image (Naive)">
                     <div class="offsets-box">
                         <p>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
@@ -204,22 +225,22 @@
         </div>
 
         <div class="project-comparison">
-            <h2>Pyramid Version Comparison (L2 vs. NCC)</h2>
+            <h2>Pyramid Version Comparison</h2>
             <p>Here is a side-by-side comparison of the alignment results using the multiscale pyramid approach, contrasting the L2 distance (Sum of Squared Differences) with Normalized Cross-Correlation (NCC) as the alignment metric. The pyramid approach significantly improves performance for larger images.</p>
 
             <h3>`emir.jpg`</h3>
             <div class="comparison-grid">
                 <div class="comparison-item">
-                    <h4>L2 Result (output)</h4>
-                    <img src="output/emir_aligned.jpg" alt="Emir L2 aligned image (Pyramid)">
+                    <h4>L2 Result</h4>
+                    <img class="pyramid-comparison-image" src="output/emir_aligned.jpg" alt="Emir L2 aligned image (Pyramid)">
                     <div class="offsets-box">
                         <h4>Best Offsets:</h4>
                         <p>Green displacement: (dx=24, dy=48)<br>Red displacement: (dx=-64, dy=-139)</p>
                     </div>
                 </div>
                 <div class="comparison-item">
-                    <h4>NCC Result (output_3)</h4>
-                    <img src="output_3/emir_aligned.jpg" alt="Emir NCC aligned image (Pyramid)">
+                    <h4>NCC Result</h4>
+                    <img class="pyramid-comparison-image" src="output_3/emir_aligned.jpg" alt="Emir NCC aligned image (Pyramid)">
                     <div class="offsets-box">
                         <h4>Best Offsets:</h4>
                         <p>Green displacement: (dx=24, dy=48)<br>Red displacement: (dx=-64, dy=-139)</p>
@@ -230,16 +251,16 @@
             <h3>`harvesters.jpg`</h3>
             <div class="comparison-grid">
                 <div class="comparison-item">
-                    <h4>L2 Result (output)</h4>
-                    <img src="output/harvesters_aligned.jpg" alt="Harvesters L2 aligned image (Pyramid)">
+                    <h4>L2 Result</h4>
+                    <img class="pyramid-comparison-image" src="output/harvesters_aligned.jpg" alt="Harvesters L2 aligned image (Pyramid)">
                     <div class="offsets-box">
                         <h4>Best Offsets:</h4>
                         <p>Green displacement: (dx=17, dy=59)<br>Red displacement: (dx=15, dy=124)</p>
                     </div>
                 </div>
                 <div class="comparison-item">
-                    <h4>NCC Result (output_3)</h4>
-                    <img src="output_3/harvesters_aligned.jpg" alt="Harvesters NCC aligned image (Pyramid)">
+                    <h4>NCC Result</h4>
+                    <img class="pyramid-comparison-image" src="output_3/harvesters_aligned.jpg" alt="Harvesters NCC aligned image (Pyramid)">
                     <div class="offsets-box">
                         <h4>Best Offsets:</h4>
                         <p>Green displacement: (dx=17, dy=59)<br>Red displacement: (dx=15, dy=124)</p>
@@ -250,16 +271,16 @@
             <h3>`icon.jpg`</h3>
             <div class="comparison-grid">
                 <div class="comparison-item">
-                    <h4>L2 Result (output)</h4>
-                    <img src="output/icon_aligned.jpg" alt="Icon L2 aligned image (Pyramid)">
+                    <h4>L2 Result</h4>
+                    <img class="pyramid-comparison-image" src="output/icon_aligned.jpg" alt="Icon L2 aligned image (Pyramid)">
                     <div class="offsets-box">
                         <h4>Best Offsets:</h4>
                         <p>Green displacement: (dx=17, dy=41)<br>Red displacement: (dx=23, dy=90)</p>
                     </div>
                 </div>
                 <div class="comparison-item">
-                    <h4>NCC Result (output_3)</h4>
-                    <img src="output_3/icon_aligned.jpg" alt="Icon NCC aligned image (Pyramid)">
+                    <h4>NCC Result</h4>
+                    <img class="pyramid-comparison-image" src="output_3/icon_aligned.jpg" alt="Icon NCC aligned image (Pyramid)">
                     <div class="offsets-box">
                         <h4>Best Offsets:</h4>
                         <p>Green displacement: (dx=17, dy=41)<br>Red displacement: (dx=23, dy=90)</p>
@@ -269,7 +290,7 @@
         </div>
 
         <div class="project-section">
-            <h2>Additional Pyramid Results (L2 Metric - `output` folder)</h2>
+            <h2>Additional Pyramid Results (L2 Metric)</h2>
             <p>These are additional images processed using the multiscale pyramid approach with the L2 metric.</p>
 
             <div class="image-container">
