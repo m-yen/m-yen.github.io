@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project 1: Colorizing Prokudin-Gorskii Photos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background: #34495e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        h1, h2 {
+            margin-top: 30px;
+            color: #2c3e50;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 20px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        .gallery img {
+            max-width: 280px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.03);
+        }
+        .code-block {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-left: 5px solid #34495e;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        .details-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .details-list li {
+            background: #eef;
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .sub-section {
+            padding-left: 20px;
+            border-left: 2px solid #bdc3c7;
+            margin-top: 15px;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Programming Project #1 (proj1)</h1>
+        <p>CS180: Intro to Computer Vision and Computational Photography</p>
+    </header>
+    <main>
+        <section class="section-header">
+            <h2>Images of the Russian Empire: Colorizing the Prokudin-Gorskii photo collection</h2>
+            <p><strong>Due Date:</strong> September 12, 2025 at 11:59 PM</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Background</h2>
+            <p>Sergei Mikhailovich Prokudin-Gorskii (1863-1944) was a man well ahead of his time. Convinced, as early as 1907, that color photography was the wave of the future, he won Tzar's special permission to travel across the vast Russian Empire and take color photographs of everything he saw. His idea was simple: record three exposures of every scene onto a glass plate using a red, a green, and a blue filter. His RGB glass plate negatives, capturing the last years of the Russian Empire, survived and were purchased in 1948 by the Library of Congress.</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Overview</h2>
+            <p>The goal of this assignment is to take the digitized Prokudin-Gorskii glass plate images and, using image processing techniques, automatically produce a color image with as few visual artifacts as possible. You will need to extract the three color channel images, place them on top of each other, and align them so that they form a single RGB color image. The full-size glass plate images are very large, so your alignment procedure will need to be relatively fast and efficient, likely requiring an image pyramid approach.</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Details</h2>
+            <p>Your program will take a glass plate image as input, divide it into three equal parts (B, G, R from top to bottom), and align the green and red parts to the blue part. For each image, you will need to print the (x,y) displacement vector used for alignment. We've used L2 norm and Normalized Cross-Correlation (NCC) as potential matching metrics, and a simple search over a window of possible displacements.</p>
+            <p>For high-resolution images, an image pyramid implementation is necessary to speed up the process.</p>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Bells & Whistles</h2>
+            <p>While not mandatory for CS180, these enhancements were required for CS280A and provide opportunities for extra credit:</p>
+            <ul class="details-list">
+                <li>Automatic cropping to remove borders.</li>
+                <li>Automatic contrasting and white balance.</li>
+                <li>Using better features like gradients or edges for alignment.</li>
+                <li>Better transformations (e.g., small scale changes and rotations).</li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Deliverables</h2>
+            <p>For this project, you must turn in both your code and a project webpage (submitted as a PDF). Your webpage should:</p>
+            <ul class="details-list">
+                <li>Provide a brief overview of your approach and any problems encountered.</li>
+                <li>Display the results of your algorithm on all provided example images, listing the calculated offsets.</li>
+                <li>Show results on a few images of your own choosing from the Prokudin-Gorskii collection.</li>
+                <li>Describe any implemented bells and whistles.</li>
+            </ul>
+        </section>
+        
+        <hr>
+
+        <footer>
+            <p>This page is a part of the CS180/CS280A course assignments.</p>
+        </footer>
+    </main>
+</body>
+</html>
