@@ -1,0 +1,30 @@
+Processing .\cs180 proj1 data\cathedral.jpg...
+  -> Green displacement: (dx=2, dy=5)
+  -> Red displacement: (dx=3, dy=12)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\naive_l2\cathedral_aligned.jpg
+Successfully processed and saved cathedral.jpg
+
+Processing .\cs180 proj1 data\extra_1.jpg...
+  -> Green displacement: (dx=2, dy=8)
+  -> Red displacement: (dx=3, dy=16)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\naive_l2\extra_1_aligned.jpg
+Successfully processed and saved extra_1.jpg
+
+Processing .\cs180 proj1 data\extra_2.jpg...
+  -> Green displacement: (dx=1, dy=4)
+  -> Red displacement: (dx=1, dy=10)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\naive_l2\extra_2_aligned.jpg
+Successfully processed and saved extra_2.jpg
+
+Processing .\cs180 proj1 data\monastery.jpg...
+  -> Green displacement: (dx=2, dy=-3)
+  -> Red displacement: (dx=2, dy=3)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\naive_l2\monastery_aligned.jpg
+Successfully processed and saved monastery.jpg
+
+Processing .\cs180 proj1 data\tobolsk.jpg...
+  -> Green displacement: (dx=3, dy=3)
+  -> Red displacement: (dx=3, dy=7)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\naive_l2\tobolsk_aligned.jpg
+Successfully processed and saved tobolsk.jpg
+

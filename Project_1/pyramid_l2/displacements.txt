@@ -1,0 +1,82 @@
+Displacements for images in '.\cs180 proj1 data':
+
+Processing file: .\cs180 proj1 data\cathedral.jpg
+  -> Green displacement: (dx=2, dy=5)
+  -> Red displacement: (dx=3, dy=12)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\cathedral_aligned.jpg
+Finished processing and saving cathedral.jpg
+Processing file: .\cs180 proj1 data\extra_1.jpg
+  -> Green displacement: (dx=2, dy=8)
+  -> Red displacement: (dx=3, dy=15)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\extra_1_aligned.jpg
+Finished processing and saving extra_1.jpg
+Processing file: .\cs180 proj1 data\extra_2.jpg
+  -> Green displacement: (dx=1, dy=4)
+  -> Red displacement: (dx=1, dy=10)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\extra_2_aligned.jpg
+Finished processing and saving extra_2.jpg
+Processing file: .\cs180 proj1 data\monastery.jpg
+  -> Green displacement: (dx=2, dy=-3)
+  -> Red displacement: (dx=2, dy=3)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\monastery_aligned.jpg
+Finished processing and saving monastery.jpg
+Processing file: .\cs180 proj1 data\tobolsk.jpg
+  -> Green displacement: (dx=3, dy=3)
+  -> Red displacement: (dx=3, dy=7)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\tobolsk_aligned.jpg
+Finished processing and saving tobolsk.jpg
+Processing file: .\cs180 proj1 data\church.tif
+  -> Green displacement: (dx=4, dy=25)
+  -> Red displacement: (dx=-4, dy=58)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\church_aligned.jpg
+Finished processing and saving church.tif
+Processing file: .\cs180 proj1 data\emir.tif
+  -> Green displacement: (dx=24, dy=48)
+  -> Red displacement: (dx=-64, dy=-139)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\emir_aligned.jpg
+Finished processing and saving emir.tif
+Processing file: .\cs180 proj1 data\harvesters.tif
+  -> Green displacement: (dx=17, dy=59)
+  -> Red displacement: (dx=15, dy=124)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\harvesters_aligned.jpg
+Finished processing and saving harvesters.tif
+Processing file: .\cs180 proj1 data\icon.tif
+  -> Green displacement: (dx=17, dy=41)
+  -> Red displacement: (dx=23, dy=90)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\icon_aligned.jpg
+Finished processing and saving icon.tif
+Processing file: .\cs180 proj1 data\italil.tif
+  -> Green displacement: (dx=21, dy=38)
+  -> Red displacement: (dx=36, dy=77)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\italil_aligned.jpg
+Finished processing and saving italil.tif
+Processing file: .\cs180 proj1 data\lastochikino.tif
+  -> Green displacement: (dx=-2, dy=-3)
+  -> Red displacement: (dx=-9, dy=76)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\lastochikino_aligned.jpg
+Finished processing and saving lastochikino.tif
+Processing file: .\cs180 proj1 data\lugano.tif
+  -> Green displacement: (dx=-16, dy=41)
+  -> Red displacement: (dx=-29, dy=93)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\lugano_aligned.jpg
+Finished processing and saving lugano.tif
+Processing file: .\cs180 proj1 data\melons.tif
+  -> Green displacement: (dx=10, dy=82)
+  -> Red displacement: (dx=16, dy=139)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\melons_aligned.jpg
+Finished processing and saving melons.tif
+Processing file: .\cs180 proj1 data\self_portrait.tif
+  -> Green displacement: (dx=29, dy=78)
+  -> Red displacement: (dx=37, dy=139)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\self_portrait_aligned.jpg
+Finished processing and saving self_portrait.tif
+Processing file: .\cs180 proj1 data\siren.tif
+  -> Green displacement: (dx=-5, dy=49)
+  -> Red displacement: (dx=-24, dy=97)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\siren_aligned.jpg
+Finished processing and saving siren.tif
+Processing file: .\cs180 proj1 data\three_generations.tif
+  -> Green displacement: (dx=15, dy=52)
+  -> Red displacement: (dx=12, dy=111)
+Saved aligned image to: c:\Users\sheld\OneDrive\Documents\UC Berkeley\CS Stuff\180\cs-180-work\Project_1\pyramid_l2\three_generations_aligned.jpg
+Finished processing and saving three_generations.tif
