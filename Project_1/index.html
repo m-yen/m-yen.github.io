@@ -45,16 +45,38 @@
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Approach</h3>
           <p class="leading-relaxed">
-            I first implemented a brute-force search that tests different shifts 
-            between channels and selects the alignment that produces the best 
-            match. The best match is determined by comparing the differences in pixel values between the two channels. Channels that are aligned will have smaller differences. Differences were measured using two metrics, l2 and ncc. This method works reliably for small images, but becomes slow 
-            and inaccurate on larger, high-resolution photographs where 
-            displacements can be quite large. To address this, I extended the 
-            approach with a <strong>pyramid-based method</strong>. By starting with 
-            heavily downsampled versions of the image and refining the alignment 
-            as resolution increases, the pyramid method achieves both efficiency 
-            and accuracy.
+            Two main alignment algorithms were implemented: the brute-force method and the pyramid-based method. 
+            Both aim to compute the best relative shift (horizontal and vertical) between channels to align them correctly.
           </p>
+        
+          <ul class="leading-relaxed list-disc pl-5">
+            <li>
+              <strong>Naive (Brute-Force) Alignment:</strong> 
+              This method works by systematically testing all possible shifts within a defined search window. 
+              For each possible shift, the algorithm compares the reference channel (usually blue) with the target channel (green or red) and computes a score that measures how well they match. 
+              Two metrics are commonly used:
+              <ul class="list-disc pl-5">
+                <li><strong>L2 distance:</strong> Measures the sum of squared differences between pixels. Smaller differences indicate better alignment. Sensitive to brightness changes.</li>
+                <li><strong>Normalized Cross-Correlation (NCC):</strong> Measures similarity while accounting for brightness and contrast differences. More robust than L2.</li>
+              </ul>
+              After evaluating all shifts, the algorithm selects the shift with the highest score and applies it to the target channel using a simple image shift. 
+              The same process is repeated for the other channel. While this method is straightforward, the computation grows quickly with image size and search window radius.
+            </li>
+        
+            <li>
+              <strong>Pyramid-Based Alignment:</strong> 
+              The pyramid algorithm is designed to efficiently handle large, high-resolution images with potentially large displacements. 
+              Its key idea is to align images starting from a downsampled, low-resolution version and progressively refine the alignment at higher resolutions:
+              <ol class="list-decimal pl-5">
+                <li>Build a <strong>Gaussian pyramid</strong> for each channel: repeatedly blur and downsample the image to create smaller versions.</li>
+                <li>Start at the smallest level of the pyramid. Perform a limited search around the current estimate to find the best shift between channels.</li>
+                <li>Propagate the estimated shift to the next higher resolution by scaling it appropriately (usually doubling the shift values).</li>
+                <li>Refine the alignment at the higher level by searching a small window around the propagated shift.</li>
+                <li>Repeat this process until reaching the full-resolution image, resulting in an accurate alignment with far less computation than brute-force at full resolution.</li>
+              </ol>
+              This hierarchical, coarse-to-fine approach significantly reduces the search space and allows the algorithm to handle images with large displacements efficiently.
+            </li>
+          </ul>
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Problems</h3>
           <p class="leading-relaxed">
@@ -63,6 +85,7 @@
             displacement could be missed, and if too large, the computation became 
             expensive. The pyramid method helped mitigate this issue by reducing 
             the search space at each scale. However for the pyramid as well, work had to be done to figure out how much to change the window size at each level.
+
           </p>
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Failed Images</h3>
@@ -75,8 +98,10 @@
             dark regions with little texture or variation. These low-contrast 
             areas provided insufficient information for the algorithm to find 
             a reliable match. I tried to fix these by increasing the cropping to cut out these bad areas for the 3 images, but was not successful.
+
           </p>
         </section>
+
 
 
 
