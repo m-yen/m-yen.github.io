@@ -22,7 +22,7 @@
             color: #2c3e50;
             text-align: center;
         }
-        .project-intro, .project-section {
+        .project-intro, .project-section, .project-methodology {
             background: #fff;
             padding: 20px;
             margin-bottom: 20px;
@@ -52,6 +52,17 @@
             font-family: monospace;
             white-space: pre;
         }
+        pre {
+            background-color: #f8f8f8;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        .code-explanation h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -66,6 +77,31 @@
                 <li>Aligning the channels to account for small displacements between exposures.</li>
                 <li>Stacking the channels to create a single RGB image with minimal visual artifacts.</li>
             </ul>
+        </div>
+        
+        <div class="project-methodology">
+            <h2>Methodology</h2>
+            <div class="code-explanation">
+                <h3>1. Brute-Force Alignment</h3>
+                <p>This method is implemented in the `GlassPlate` class and works by systematically checking every possible displacement within a defined search window.</p>
+                <ul>
+                    <li><strong>`trim_colors()`</strong>: This function first divides the large glass plate image into three equal-height channels: Blue (B), Green (G), and Red (R).</li>
+                    <li><strong>`find_best_align()`</strong>: This function is the core of the brute-force alignment. It compares a reference channel (usually Blue) to a target channel (Green or Red) at various shifts. It iterates through all possible horizontal (`dx`) and vertical (`dy`) shifts within a specified `radius`.</li>
+                    <li><strong>Metric</strong>: For each shift, it calculates a metric to determine how well the images match. Your code uses <strong>Normalized Cross-Correlation (NCC)</strong>, which is a robust metric that's insensitive to changes in brightness and contrast. The best alignment is the one that yields the highest correlation value.</li>
+                    <li><strong>`align_two_colors()`</strong>: This function calls `find_best_align()` to get the best shifts. It then applies these shifts to the target channel using `np.roll()`, which circularly shifts the image data.</li>
+                    <li><strong>`align_colors()`</strong>: This method orchestrates the alignment process, calling `align_two_colors()` for both the green and red channels against the blue channel, and then stacks the aligned channels together to create the final color image.</li>
+                </ul>
+            </div>
+            <div class="code-explanation">
+                <h3>2. Pyramid-Based Alignment</h3>
+                <p>This is an optimization of the brute-force method, implemented in the `GlassPlatePyramid` class, designed to handle large, high-resolution images more efficiently.</p>
+                <ul>
+                    <li><strong>`build_gaussian_pyramid()`</strong>: This function creates a <strong>Gaussian pyramid</strong>, a sequence of downscaled images. It repeatedly blurs and subsamples the image, creating smaller and smaller versions. This is crucial for performance.</li>
+                    <li><strong>`align_from_pyramids()`</strong>: This is the key function for this method. Instead of searching the full-resolution image, it starts by finding a rough alignment on the smallest image in the pyramid.</li>
+                    <li><strong>Hierarchical Search</strong>: Once an initial alignment is found on a small image, the displacement values are scaled up and used as the new search center for the next, larger level of the pyramid. This process repeats until the full-resolution image is reached.</li>
+                    <li><strong>Efficiency</strong>: This hierarchical search significantly reduces the search space at each level. Instead of searching `N x N` pixels at full resolution, you search a small window around a known good estimate. This makes the process much faster, especially for very large images.</li>
+                </ul>
+            </div>
         </div>
 
         <div class="project-section">
@@ -227,7 +263,7 @@
         </div>
 
         <div class="project-section">
-            <h2>Results from the `output_2` folder</h2>
+            <h2>Results from simple Align</h2>
             <p>These are the images processed with a different set of parameters or algorithm.</p>
 
             <div class="image-container">
