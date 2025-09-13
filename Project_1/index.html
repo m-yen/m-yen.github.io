@@ -3,445 +3,390 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 1: Colorizing Prokudin-Gorskii Photos</title>
+    <title>Project 1: Image Alignment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f4f4;
-            color: #333;
-            line-height: 1.6;
-        }
-        main {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-        }
-        .project-intro, .project-section, .project-methodology, .project-issues, .project-failures, .project-comparison {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .image-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .offsets-box {
-            background: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 15px;
-        }
-        .offsets-box h4 {
-            margin-top: 0;
-        }
-        .offsets-box p {
-            font-family: monospace;
-            white-space: pre;
-        }
-        pre {
-            background-color: #f8f8f8;
-            border: 1px solid #ccc;
-            padding: 10px;
-            overflow-x: auto;
-        }
-        .code-explanation h3 {
-            margin-top: 0;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-        }
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .comparison-item {
-            text-align: center;
+            font-family: 'Inter', sans-serif;
         }
     </style>
 </head>
-<body>
-    <main>
-        <h1>Project 1: Prokudin-Gorskii Photo Colorization</h1>
-        
-        <div class="project-intro">
-            <h2>Project Overview</h2>
-            <p>Sergei Mikhailovich Prokudin-Gorskii (1863–1944) was a pioneering photographer who foresaw the potential of color photography over a century ago. Starting in 1907, he traveled across the Russian Empire under special permission from the Tsar, capturing thousands of color photographs of people, buildings, landscapes, and infrastructure. The goal of this project is to take the digitized Prokudin-Gorskii glass plates and automatically produce full-color images using image processing techniques. This involves:</p>
-            <ul>
-                <li>Extracting the three color channels (B, G, R) from each glass plate.</li>
-                <li>Aligning the channels to account for small displacements between exposures.</li>
-                <li>Stacking the channels to create a single RGB image with minimal visual artifacts.</li>
-            </ul>
+<body class="bg-slate-50 text-slate-800 antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-slate-900 text-white py-10 text-center rounded-b-xl shadow-lg">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Project 1: Image Alignment</h1>
+            <p class="mt-2 text-lg md:text-xl text-slate-300">A demonstration of naive and pyramid-based alignment methods.</p>
         </div>
-        
-        <div class="project-methodology">
-            <h2>Methodology</h2>
-            <div class="code-explanation">
-                <h3>1. Brute-Force Alignment</h3>
-                <p>This method is implemented in the `GlassPlate` class and works by systematically checking every possible displacement within a defined search window.</p>
-                <ul>
-                    <li><strong>`trim_colors()`</strong>: This function first divides the large glass plate image into three equal-height channels: Blue (B), Green (G), and Red (R).</li>
-                    <li><strong>`find_best_align()`</strong>: This function is the core of the brute-force alignment. It compares a reference channel (usually Blue) to a target channel (Green or Red) at various shifts. It iterates through all possible horizontal (`dx`) and vertical (`dy`) shifts within a specified `radius`.</li>
-                    <li><strong>Metric</strong>: For each shift, it calculates a metric to determine how well the images match. Your code uses <strong>Normalized Cross-Correlation (NCC)</strong>, which is a robust metric that's insensitive to changes in brightness and contrast. The best alignment is the one that yields the highest correlation value.</li>
-                    <li><strong>`align_two_colors()`</strong>: This function calls `find_best_align()` to get the best shifts. It then applies these shifts to the target channel using `np.roll()`, which circularly shifts the image data.</li>
-                    <li><strong>`align_colors()`</strong>: This method orchestrates the alignment process, calling `align_two_colors()` for both the green and red channels against the blue channel, and then stacks the aligned channels together to create the final color image.</li>
-                </ul>
-            </div>
-            <div class="code-explanation">
-                <h3>2. Pyramid-Based Alignment</h3>
-                <p>This is an optimization of the brute-force method, implemented in the `GlassPlatePyramid` class, designed to handle large, high-resolution images more efficiently.</p>
-                <ul>
-                    <li><strong>`build_gaussian_pyramid()`</strong>: This function creates a <strong>Gaussian pyramid</strong>, a sequence of downscaled images. It repeatedly blurs and subsamples the image, creating smaller and smaller versions. This is crucial for performance.</li>
-                    <li><strong>`align_from_pyramids()`</strong>: This is the key function for this method. Instead of searching the full-resolution image, it starts by finding a rough alignment on the smallest image in the pyramid.</li>
-                    <li><strong>Hierarchical Search</strong>: Once an initial alignment is found on a small image, the displacement values are scaled up and used as the new search center for the next, larger level of the pyramid. This process repeats until the full-resolution image is reached.</li>
-                    <li><strong>Efficiency</strong>: This hierarchical search significantly reduces the search space at each level. Instead of searching `N x N` pixels at full resolution, you search a small window around a known good estimate. This makes the process much faster, especially for very large images.</li>
-                </ul>
-            </div>
-        </div>
+    </header>
 
-        <div class="project-issues">
-            <h2>Issues Encountered</h2>
-            <p>This project presented several technical challenges, primarily related to <strong>performance and parameter optimization</strong>. Key issues included:</p>
-            
-            <h3>1. Pyramid Generation and Propagation</h3>
-            <p>The initial implementation of the Gaussian pyramid and the upward propagation of displacement shifts was difficult. A significant hurdle was ensuring that the shifts were correctly scaled at each level of the pyramid. A simple `dx *= 2` and `dy *= 2` was effective for propagating the displacement, but correctly applying the `np.roll` function to the images at each level to shift them before the next round of fine-tuning was tricky to implement without errors.</p>
-            
-            <h3>2. Parameter Tuning</h3>
-            <p>Determining the optimal parameters for the alignment algorithm was a major challenge. This involved choosing:</p>
-            <ul>
-                <li><strong>Search Window Size:</strong> A window that was too small risked missing the correct alignment, while a window that was too large significantly increased the computational time.</li>
-                <li><strong>Best Metric:</strong> While <strong>Normalized Cross-Correlation (NCC)</strong> proved to be the most robust metric, other metrics like L2 distance (Sum of Squared Differences) were initially tested. L2 was found to be highly sensitive to brightness and contrast variations, making it unsuitable for many of the images.</li>
-                <li><strong>Border Cropping:</strong> Cropping the borders of the images was necessary to remove black or white edges that skewed the alignment metric. Finding the correct percentage to crop was a trial-and-error process to ensure enough of the image's core content was preserved for a reliable match.</li>
-            </ul>
+    <!-- Main Content Container -->
+    <main class="container mx-auto mt-12 p-6 md:p-10 bg-white rounded-xl shadow-lg space-y-12">
 
-            <h3>3. Runtime Optimization</h3>
-            <p>For high-resolution images, the initial brute-force approach had unacceptably long <strong>runtimes</strong>. The main bottleneck was the nested loops used to search for the best displacement. This was resolved by implementing the <strong>multiscale image pyramid</strong>, which drastically reduced the search space. Fine-tuning the slicing and cropping operations on the image arrays also led to notable performance improvements.</p>
-        </div>
-
-        <div class="project-failures">
-            <h2>Analysis of Failed Images</h2>
-            <p>A few images presented significant challenges for the alignment algorithm, primarily due to <strong>brightness inconsistencies</strong> and <strong>large displacements</strong> between the color channels. The images with the most notable failures were `emir.jpg`, `melons.jpg`, and `self_portrait.jpg`.</p>
+        <!-- Naive Alignment Comparison -->
+        <section>
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Naive Alignment Comparison</h2>
+            <p class="mb-6 text-slate-600">This section allows you to compare the original image with the results of Naive L2 and Naive NCC alignment methods side-by-side.</p>
             
-            <h3>`emir.jpg`</h3>
-            <p>This image failed to align correctly, most likely because of <strong>dramatic brightness and contrast variations</strong> between its color channels. The difference in lighting conditions captured by each exposure likely led to an inaccurate correlation score, causing the algorithm to fail. 
-            </p>
-            <h3>`melons.jpg` & `self_portrait.jpg`</h3>
-            <p>Both of these images feature large, dark, and <strong>underexposed areas</strong> (shadows). These dark regions have minimal feature information and low intensity variance. This makes it difficult for the Normalized Cross-Correlation (NCC) metric to find a reliable match, as the low-variance pixel data is essentially "flat." The algorithm is therefore easily misled, resulting in an incorrect displacement being chosen.
-            </p>
-        </div>
-
-        <div class="project-comparison">
-            <h2>L2 vs. NCC Comparison</h2>
-            <p>Here is a side-by-side comparison of the alignment results using the L2 distance (Sum of Squared Differences) and Normalized Cross-Correlation (NCC) as the alignment metric. NCC generally provides a more robust alignment by being invariant to changes in brightness and contrast.</p>
-            
-            <h3>`tobolsk.jpg`</h3>
-            <div class="comparison-grid">
-                <div class="comparison-item">
-                    <h4>L2 Result</h4>
-                    <img src="output_2/tobolsk_aligned.jpg" alt="Tobolsk L2 aligned image">
-                    <div class="offsets-box">
-                        <p>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=7)</p>
+            <div class="space-y-10">
+                <!-- Comparison for cathedral.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: cathedral.jpg</h3>
+                        <img src="./naive_l2/cathedral.jpg" alt="Original cathedral.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive L2: cathedral.jpg</h3>
+                        <img src="./naive_l2/cathedral_aligned.jpg" alt="cathedral.jpg aligned with Naive L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=5)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=12)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive NCC: cathedral.jpg</h3>
+                        <img src="./naive_ncc/cathedral_aligned.jpg" alt="cathedral.jpg aligned with Naive NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=5)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=12)</p>
                     </div>
                 </div>
-                <div class="comparison-item">
-                    <h4>NCC Result</h4>
-                    <img src="output_3/tobolsk_aligned.jpg" alt="Tobolsk NCC aligned image">
-                    <div class="offsets-box">
-                        <p>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=7)</p>
-                    </div>
-                </div>
-            </div>
-            
-            <h3>`cathedral.jpg`</h3>
-            <div class="comparison-grid">
-                <div class="comparison-item">
-                    <h4>L2 Result</h4>
-                    <img src="output_2/cathedral_aligned.jpg" alt="Cathedral L2 aligned image">
-                    <div class="offsets-box">
-                        <p>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
-                    </div>
-                </div>
-                <div class="comparison-item">
-                    <h4>NCC Result</h4>
-                    <img src="output_3/cathedral_aligned.jpg" alt="Cathedral NCC aligned image">
-                    <div class="offsets-box">
-                        <p>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
-                    </div>
-                </div>
-            </div>
 
-            <h3>`monastery.jpg`</h3>
-            <div class="comparison-grid">
-                <div class="comparison-item">
-                    <h4>L2 Result</h4>
-                    <img src="output_2/monastery_aligned.jpg" alt="Monastery L2 aligned image">
-                    <div class="offsets-box">
-                        <p>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+                <!-- Comparison for extra_1.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: extra_1.jpg</h3>
+                        <img src="./naive_l2/extra_1.jpg" alt="Original extra_1.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive L2: extra_1.jpg</h3>
+                        <img src="./naive_l2/extra_1_aligned.jpg" alt="extra_1.jpg aligned with Naive L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=8)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=16)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive NCC: extra_1.jpg</h3>
+                        <img src="./naive_ncc/extra_1_aligned.jpg" alt="extra_1.jpg aligned with Naive NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=8)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=16)</p>
                     </div>
                 </div>
-                <div class="comparison-item">
-                    <h4>NCC Result</h4>
-                    <img src="output_3/monastery_aligned.jpg" alt="Monastery NCC aligned image">
-                    <div class="offsets-box">
-                        <p>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
+
+                <!-- Comparison for extra_2.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: extra_2.jpg</h3>
+                        <img src="./naive_l2/extra_2.jpg" alt="Original extra_2.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive L2: extra_2.jpg</h3>
+                        <img src="./naive_l2/extra_2_aligned.jpg" alt="extra_2.jpg aligned with Naive L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=1, dy=4)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=1, dy=10)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive NCC: extra_2.jpg</h3>
+                        <img src="./naive_ncc/extra_2_aligned.jpg" alt="extra_2.jpg aligned with Naive NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=1, dy=4)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=1, dy=10)</p>
+                    </div>
+                </div>
+
+                <!-- Comparison for monastery.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: monastery.jpg</h3>
+                        <img src="./naive_l2/monastery.jpg" alt="Original monastery.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive L2: monastery.jpg</h3>
+                        <img src="./naive_l2/monastery_aligned.jpg" alt="monastery.jpg aligned with Naive L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=-3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=2, dy=3)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive NCC: monastery.jpg</h3>
+                        <img src="./naive_ncc/monastery_aligned.jpg" alt="monastery.jpg aligned with Naive NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=2, dy=-3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=2, dy=3)</p>
+                    </div>
+                </div>
+
+                <!-- Comparison for tobolsk.jpg -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: tobolsk.jpg</h3>
+                        <img src="./naive_l2/tobolsk.jpg" alt="Original tobolsk.jpg" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive L2: tobolsk.jpg</h3>
+                        <img src="./naive_l2/tobolsk_aligned.jpg" alt="tobolsk.jpg aligned with Naive L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=3, dy=3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=7)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Naive NCC: tobolsk.jpg</h3>
+                        <img src="./naive_ncc/tobolsk_aligned.jpg" alt="tobolsk.jpg aligned with Naive NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=3, dy=3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=3, dy=6)</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="project-section">
-            <h2>Pyramid</h2>
-            <p>These are the results using a multiscale pyramid approach to align the images.</p>
+        <!-- --- -->
 
-            <div class="image-container">
-                <h3>Image: `tobolsk_aligned.jpg`</h3>
-                <img src="output/tobolsk_aligned.jpg" alt="Aligned image for tobolsk.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=7)</p>
-                </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `cathedral_aligned.jpg`</h3>
-                <img src="output/cathedral_aligned.jpg" alt="Aligned image for cathedral.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
-                </div>
-            </div>
+        <!-- Pyramid Alignment Comparison -->
+        <section>
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Pyramid Alignment Comparison</h2>
+            <p class="mb-6 text-slate-600">This section allows you to compare the original image with the results of Pyramid L2 and Pyramid NCC alignment methods side-by-side.</p>
 
-            <div class="image-container">
-                <h3>Image: `church_aligned.jpg`</h3>
-                <img src="output/church_aligned.jpg" alt="Aligned image for church.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=4, dy=25)<br>Red displacement: (dx=-4, dy=58)</p>
+            <div class="space-y-10">
+                <!-- Comparison for church.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: church.tif</h3>
+                        <img src="./pyramid_l2/church.tif" alt="Original church.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: church.tif</h3>
+                        <img src="./pyramid_l2/church_aligned.jpg" alt="church.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=4, dy=25)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=-4, dy=58)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: church.tif</h3>
+                        <img src="./pyramid_ncc/church_aligned.jpg" alt="church.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=4, dy=25)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=-4, dy=58)</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `emir_aligned.jpg`</h3>
-                <img src="output/emir_aligned.jpg" alt="Aligned image for emir.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=24, dy=48)<br>Red displacement: (dx=-64, dy=-139)</p>
-                </div>
-            </div>
 
-            <div class="image-container">
-                <h3>Image: `extra_1_aligned.jpg`</h3>
-                <img src="output/extra_1_aligned.jpg" alt="Aligned image for extra_1.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=-4, dy=4)<br>Red displacement: (dx=-9, dy=11)</p>
+                <!-- Comparison for emir.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: emir.tif</h3>
+                        <img src="./pyramid_l2/emir.tif" alt="Original emir.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: emir.tif</h3>
+                        <img src="./pyramid_l2/emir_aligned.jpg" alt="emir.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=24, dy=48)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=-64, dy=-139)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: emir.tif</h3>
+                        <img src="./pyramid_ncc/emir_aligned.jpg" alt="emir.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=24, dy=48)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=31, dy=-27)</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `extra_2_aligned.jpg`</h3>
-                <img src="output/extra_2_aligned.jpg" alt="Aligned image for extra_2.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=2, dy=8)<br>Red displacement: (dx=3, dy=15)</p>
-                </div>
-            </div>
 
-            <div class="image-container">
-                <h3>Image: `extra_3_aligned.jpg`</h3>
-                <img src="output/extra_3_aligned.jpg" alt="Aligned image for extra_3.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=-1, dy=3)<br>Red displacement: (dx=-3, dy=14)</p>
+                <!-- Comparison for harvesters.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: harvesters.tif</h3>
+                        <img src="./pyramid_l2/harvesters.tif" alt="Original harvesters.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: harvesters.tif</h3>
+                        <img src="./pyramid_l2/harvesters_aligned.jpg" alt="harvesters.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=17, dy=59)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=15, dy=124)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: harvesters.tif</h3>
+                        <img src="./pyramid_ncc/harvesters_aligned.jpg" alt="harvesters.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=17, dy=59)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=15, dy=124)</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `harvesters_aligned.jpg`</h3>
-                <img src="output/harvesters_aligned.jpg" alt="Aligned image for harvesters.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=17, dy=59)<br>Red displacement: (dx=15, dy=124)</p>
-                </div>
-            </div>
 
-            <div class="image-container">
-                <h3>Image: `icon_aligned.jpg`</h3>
-                <img src="output/icon_aligned.jpg" alt="Aligned image for icon.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=17, dy=41)<br>Red displacement: (dx=23, dy=90)</p>
+                <!-- Comparison for icon.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: icon.tif</h3>
+                        <img src="./pyramid_l2/icon.tif" alt="Original icon.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: icon.tif</h3>
+                        <img src="./pyramid_l2/icon_aligned.jpg" alt="icon.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=17, dy=41)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=23, dy=90)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: icon.tif</h3>
+                        <img src="./pyramid_ncc/icon_aligned.jpg" alt="icon.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=17, dy=41)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=23, dy=90)</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `italil_aligned.jpg`</h3>
-                <img src="output/italil_aligned.jpg" alt="Aligned image for italil.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=21, dy=38)<br>Red displacement: (dx=36, dy=77)</p>
-                </div>
-            </div>
 
-            <div class="image-container">
-                <h3>Image: `lastochikino_aligned.jpg`</h3>
-                <img src="output/lastochikino_aligned.jpg" alt="Aligned image for lastochikino.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=-2, dy=-3)<br>Red displacement: (dx=-9, dy=76)</p>
+                <!-- Comparison for italil.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: italil.tif</h3>
+                        <img src="./pyramid_l2/italil.tif" alt="Original italil.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: italil.tif</h3>
+                        <img src="./pyramid_l2/italil_aligned.jpg" alt="italil.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=21, dy=38)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=36, dy=77)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: italil.tif</h3>
+                        <img src="./pyramid_ncc/italil_aligned.jpg" alt="italil.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=21, dy=38)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=36, dy=77)</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `lugano_aligned.jpg`</h3>
-                <img src="output/lugano_aligned.jpg" alt="Aligned image for lugano.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=-16, dy=41)<br>Red displacement: (dx=-29, dy=93)</p>
-                </div>
-            </div>
 
-            <div class="image-container">
-                <h3>Image: `melons_aligned.jpg`</h3>
-                <img src="output/melons_aligned.jpg" alt="Aligned image for melons.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=10, dy=82)<br>Red displacement: (dx=16, dy=139)</p>
+                <!-- Comparison for lastochikino.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: lastochikino.tif</h3>
+                        <img src="./pyramid_l2/lastochikino.tif" alt="Original lastochikino.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: lastochikino.tif</h3>
+                        <img src="./pyramid_l2/lastochikino_aligned.jpg" alt="lastochikino.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=-2, dy=-3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=-9, dy=76)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: lastochikino.tif</h3>
+                        <img src="./pyramid_ncc/lastochikino_aligned.jpg" alt="lastochikino.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=-2, dy=-3)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=-8, dy=75)</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `monastery_aligned.jpg`</h3>
-                <img src="output/monastery_aligned.jpg" alt="Aligned image for monastery.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
-                </div>
-            </div>
 
-            <div class="image-container">
-                <h3>Image: `self_portrait_aligned.jpg`</h3>
-                <img src="output/self_portrait_aligned.jpg" alt="Aligned image for self_portrait.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=29, dy=78)<br>Red displacement: (dx=37, dy=139)</p>
+                <!-- Comparison for lugano.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: lugano.tif</h3>
+                        <img src="./pyramid_l2/lugano.tif" alt="Original lugano.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: lugano.tif</h3>
+                        <img src="./pyramid_l2/lugano_aligned.jpg" alt="lugano.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=-16, dy=41)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=-29, dy=93)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: lugano.tif</h3>
+                        <img src="./pyramid_ncc/lugano_aligned.jpg" alt="lugano.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=-16, dy=41)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=-29, dy=93)</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `siren_aligned.jpg`</h3>
-                <img src="output/siren_aligned.jpg" alt="Aligned image for siren.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=-5, dy=49)<br>Red displacement: (dx=-24, dy=97)</p>
-                </div>
-            </div>
 
-            <div class="image-container">
-                <h3>Image: `three_generations_aligned.jpg`</h3>
-                <img src="output/three_generations_aligned.jpg" alt="Aligned image for three_generations.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=15, dy=52)<br>Red displacement: (dx=12, dy=111)</p>
+                <!-- Comparison for melons.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: melons.tif</h3>
+                        <img src="./pyramid_l2/melons.tif" alt="Original melons.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: melons.tif</h3>
+                        <img src="./pyramid_l2/melons_aligned.jpg" alt="melons.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=10, dy=82)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=16, dy=139)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: melons.tif</h3>
+                        <img src="./pyramid_ncc/melons_aligned.jpg" alt="melons.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=10, dy=83)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=14, dy=139)</p>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="project-section">
-            <h2>Results from the `output_2` folder (L2 Metric)</h2>
-            <p>These are the images processed with the L2 (Sum of Squared Differences) metric.</p>
+                <!-- Comparison for self_portrait.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: self_portrait.tif</h3>
+                        <img src="./pyramid_l2/self_portrait.tif" alt="Original self_portrait.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: self_portrait.tif</h3>
+                        <img src="./pyramid_l2/self_portrait_aligned.jpg" alt="self_portrait.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=29, dy=78)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=37, dy=139)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: self_portrait.tif</h3>
+                        <img src="./pyramid_ncc/self_portrait_aligned.jpg" alt="self_portrait.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=29, dy=78)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=31, dy=139)</p>
+                    </div>
+                </div>
 
-            <div class="image-container">
-                <h3>Image: `tobolsk_aligned.jpg`</h3>
-                <img src="output_2/tobolsk_aligned.jpg" alt="Aligned image for tobolsk.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=7)</p>
+                <!-- Comparison for siren.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: siren.tif</h3>
+                        <img src="./pyramid_l2/siren.tif" alt="Original siren.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: siren.tif</h3>
+                        <img src="./pyramid_l2/siren_aligned.jpg" alt="siren.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=-5, dy=49)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=-24, dy=97)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: siren.tif</h3>
+                        <img src="./pyramid_ncc/siren_aligned.jpg" alt="siren.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=-5, dy=49)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=-24, dy=96)</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `cathedral_aligned.jpg`</h3>
-                <img src="output_2/cathedral_aligned.jpg" alt="Aligned image for cathedral.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
-                </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `extra_2_aligned.jpg`</h3>
-                <img src="output_2/extra_2_aligned.jpg" alt="Aligned image for extra_2.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=2, dy=8)<br>Red displacement: (dx=3, dy=16)</p>
-                </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `monastery_aligned.jpg`</h3>
-                <img src="output_2/monastery_aligned.jpg" alt="Aligned image for monastery.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="project-section">
-            <h2>Results from the `output_3` folder (NCC Metric)</h2>
-            <p>These are the images processed with the Normalized Cross-Correlation (NCC) metric.</p>
 
-            <div class="image-container">
-                <h3>Image: `tobolsk_aligned.jpg`</h3>
-                <img src="output_3/tobolsk_aligned.jpg" alt="Aligned image for tobolsk.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=7)</p>
+                <!-- Comparison for three_generations.tif -->
+                <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Original: three_generations.tif</h3>
+                        <img src="./pyramid_l2/three_generations.tif" alt="Original three_generations.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid L2: three_generations.tif</h3>
+                        <img src="./pyramid_l2/three_generations_aligned.jpg" alt="three_generations.tif aligned with Pyramid L2" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=15, dy=52)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=12, dy=111)</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <h3 class="font-semibold text-lg mb-2">Pyramid NCC: three_generations.tif</h3>
+                        <img src="./pyramid_ncc/three_generations_aligned.jpg" alt="three_generations.tif aligned with Pyramid NCC" class="rounded-lg max-w-full h-auto mb-2">
+                        <p class="text-sm text-slate-600">Green displacement: (dx=15, dy=51)</p>
+                        <p class="text-sm text-slate-600">Red displacement: (dx=12, dy=111)</p>
+                    </div>
                 </div>
             </div>
-            
-            <div class="image-container">
-                <h3>Image: `cathedral_aligned.jpg`</h3>
-                <img src="output_3/cathedral_aligned.jpg" alt="Aligned image for cathedral.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
-                </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `extra_2_aligned.jpg`</h3>
-                <img src="output_3/extra_2_aligned.jpg" alt="Aligned image for extra_2.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=2, dy=8)<br>Red displacement: (dx=3, dy=16)</p>
-                </div>
-            </div>
-            
-            <div class="image-container">
-                <h3>Image: `monastery_aligned.jpg`</h3>
-                <img src="output_3/monastery_aligned.jpg" alt="Aligned image for monastery.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=2, dy=-3)<br>Red displacement: (dx=2, dy=3)</p>
-                </div>
-            </div>
-        </div>
+        </section>
+
     </main>
+
+    <!-- Footer Section -->
+    <footer class="mt-12 py-6 text-center text-slate-500 text-sm">
+        <a href="../index.html" class="hover:text-slate-900 transition-colors duration-200 ease-in-out">← Back to Home</a>
+    </footer>
+
 </body>
 </html>
