@@ -22,7 +22,7 @@
             color: #2c3e50;
             text-align: center;
         }
-        .project-section {
+        .project-intro, .project-section {
             background: #fff;
             padding: 20px;
             margin-bottom: 20px;
@@ -58,8 +58,19 @@
     <main>
         <h1>Project 1: Prokudin-Gorskii Photo Colorization</h1>
         
+        <div class="project-intro">
+            <h2>Project Overview</h2>
+            <p>Sergei Mikhailovich Prokudin-Gorskii (1863–1944) was a pioneering photographer who foresaw the potential of color photography over a century ago. Starting in 1907, he traveled across the Russian Empire under special permission from the Tsar, capturing thousands of color photographs of people, buildings, landscapes, and infrastructure. The goal of this project is to take the digitized Prokudin-Gorskii glass plates and automatically produce full-color images using image processing techniques. This involves:</p>
+            <ul>
+                <li>Extracting the three color channels (B, G, R) from each glass plate.</li>
+                <li>Aligning the channels to account for small displacements between exposures.</li>
+                <li>Stacking the channels to create a single RGB image with minimal visual artifacts.</li>
+            </ul>
+        </div>
+
         <div class="project-section">
             <h2>Pyramid</h2>
+            <p>These are the results using a multiscale pyramid approach to align the images.</p>
 
             <div class="image-container">
                 <h3>Image: `tobolsk_aligned.jpg`</h3>
@@ -165,7 +176,7 @@
                 <img src="output/lugano_aligned.jpg" alt="Aligned image for lugano.jpg">
                 <div class="offsets-box">
                     <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=-16, dy=41)<br>Red displacement:  (dx=-29, dy=93)</p>
+                    <p>Green displacement: (dx=-16, dy=41)<br>Red displacement: (dx=-29, dy=93)</p>
                 </div>
             </div>
 
@@ -213,14 +224,6 @@
                     <p>Green displacement: (dx=15, dy=52)<br>Red displacement: (dx=12, dy=111)</p>
                 </div>
             </div>
-            <div class="image-container">
-                <h3>Image: `tobolsk_aligned.jpg`</h3>
-                <img src="output_2/tobolsk_aligned.jpg" alt="Aligned image for tobolsk.jpg">
-                <div class="offsets-box">
-                    <h4>Best Offsets:</h4>
-                    <p>Green displacement: (dx=3, dy=3)<br>Red displacement: (dx=3, dy=7)</p>
-                </div>
-            </div>
         </div>
 
         <div class="project-section">
@@ -244,7 +247,7 @@
                     <p>Green displacement: (dx=2, dy=5)<br>Red displacement: (dx=3, dy=12)</p>
                 </div>
             </div>
-
+            
             <div class="image-container">
                 <h3>Image: `extra_2_aligned.jpg`</h3>
                 <img src="output_2/extra_2_aligned.jpg" alt="Aligned image for extra_2.jpg">
@@ -253,7 +256,7 @@
                     <p>Green displacement: (dx=2, dy=8)<br>Red displacement: (dx=3, dy=16)</p>
                 </div>
             </div>
-        
+            
             <div class="image-container">
                 <h3>Image: `monastery_aligned.jpg`</h3>
                 <img src="output_2/monastery_aligned.jpg" alt="Aligned image for monastery.jpg">
