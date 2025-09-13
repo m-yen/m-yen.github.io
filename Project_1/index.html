@@ -33,72 +33,51 @@
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Project Overview</h3>
           <p class="leading-relaxed">
-            Sergei Mikhailovich Prokudin-Gorskii (1863–1944) was a pioneering photographer who foresaw 
-            the potential of color photography over a century ago. Starting in 1907, he traveled across 
-            the Russian Empire under special permission from the Tsar, capturing thousands of color photographs 
-            of people, buildings, landscapes, and infrastructure. 
+            The goal of this project is to reconstruct color images from the digitized 
+            glass plate negatives of Sergei Mikhailovich Prokudin-Gorskii, a pioneer 
+            of early color photography in the Russian Empire. Each plate contains 
+            three grayscale exposures of the same scene, taken with red, green, 
+            and blue filters. To form a single color image, the three channels must 
+            be carefully aligned, since even small displacements create visible 
+            artifacts. The project focuses on developing methods to extract the 
+            three channels, align them, and stack them into coherent RGB images.
           </p>
-          <p class="leading-relaxed mt-2">
-            The goal of this project is to take the digitized Prokudin-Gorskii glass plates and 
-            automatically produce full-color images using image processing techniques. This involves:
-          </p>
-          <ul class="list-disc list-inside leading-relaxed mt-2">
-            <li>Extracting the three color channels (B, G, R) from each glass plate.</li>
-            <li>Aligning the channels to account for small displacements between exposures.</li>
-            <li>Stacking the channels to create a single RGB image with minimal visual artifacts.</li>
-          </ul>
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Approach</h3>
           <p class="leading-relaxed">
-            Two methods were implemented: brute-force alignment and pyramid-based alignment.
+            I first implemented a brute-force search that tests different shifts 
+            between channels and selects the alignment that produces the best 
+            match. The best match is determined by comparing the differences in pixel values between the two channels. Channels that are aligned will have smaller differences. Differences were measured using two metrics, l2 and ncc. This method works reliably for small images, but becomes slow 
+            and inaccurate on larger, high-resolution photographs where 
+            displacements can be quite large. To address this, I extended the 
+            approach with a <strong>pyramid-based method</strong>. By starting with 
+            heavily downsampled versions of the image and refining the alignment 
+            as resolution increases, the pyramid method achieves both efficiency 
+            and accuracy.
           </p>
-          <p class="leading-relaxed mt-2">
-            <strong>1. Brute-Force Alignment:</strong> Implemented in the <code>GlassPlate</code> class.  
-            It systematically checks every possible displacement within a defined search window.
-          </p>
-          <ul class="list-disc list-inside leading-relaxed mt-2">
-            <li><code>trim_colors()</code>: Divides the glass plate into B, G, R channels.</li>
-            <li><code>find_best_align()</code>: Iterates over horizontal (dx) and vertical (dy) shifts within a radius, 
-                using Normalized Cross-Correlation (NCC) as the metric.</li>
-            <li><code>align_two_colors()</code>: Applies the best shifts with <code>np.roll()</code>.</li>
-            <li><code>align_colors()</code>: Aligns green and red to blue and stacks the final image.</li>
-          </ul>
-          <p class="leading-relaxed mt-4">
-            <strong>2. Pyramid-Based Alignment:</strong> Implemented in the <code>GlassPlatePyramid</code> class 
-            to handle large, high-resolution images more efficiently.
-          </p>
-          <ul class="list-disc list-inside leading-relaxed mt-2">
-            <li><code>build_gaussian_pyramid()</code>: Creates progressively smaller versions of the image.</li>
-            <li><code>align_from_pyramids()</code>: Finds rough alignment on the smallest image, then refines upward.</li>
-            <li>Displacements are scaled and refined at each level, greatly reducing search time.</li>
-          </ul>
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Problems</h3>
           <p class="leading-relaxed">
-            Several technical challenges arose during the project:
+            One difficulty was 
+            selecting the right search window size. In the code, we would take two channels and use a "window" of displacements to search. However, if the window is too small, the correct 
+            displacement could be missed, and if too large, the computation became 
+            expensive. The pyramid method helped mitigate this issue by reducing 
+            the search space at each scale. However for the pyramid as well, work had to be done to figure out how much to change the window size at each level.
           </p>
-          <ul class="list-disc list-inside leading-relaxed mt-2">
-            <li><strong>Pyramid generation and propagation:</strong> Scaling and applying shifts correctly between levels was tricky. 
-                A simple <code>dx *= 2</code>, <code>dy *= 2</code> worked, but handling <code>np.roll</code> carefully was essential.</li>
-            <li><strong>Parameter tuning:</strong> Choosing the search window size, metric, and border cropping was a trial-and-error process. 
-                NCC outperformed L2 since L2 was highly sensitive to brightness differences.</li>
-            <li><strong>Runtime optimization:</strong> Brute-force was very slow on high-res images. 
-                The pyramid method drastically reduced search space, making it practical.</li>
-          </ul>
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Failed Images</h3>
           <p class="leading-relaxed">
-            Some images were especially difficult due to brightness inconsistencies and large displacements.
-          </p>
-          <p class="leading-relaxed mt-2">
-            <strong>emir.jpg:</strong> Failed because of dramatic brightness and contrast variations between channels, 
-            which misled the correlation metric.
-          </p>
-          <p class="leading-relaxed mt-2">
-            <strong>melons.jpg & self_portrait.jpg:</strong> Both contained large, dark underexposed regions with very low variance. 
-            These "flat" areas provided little signal for NCC, leading to poor alignment.
+            A few images were problematic. 
+            <em>emir.jpg</em> in particular failed due to dramatic brightness and 
+            contrast differences between the three exposures, which caused the 
+            correlation metric to misalign the channels. Other images like 
+            <em>melons.jpg</em> and <em>self_portrait.jpg</em> contained large 
+            dark regions with little texture or variation. These low-contrast 
+            areas provided insufficient information for the algorithm to find 
+            a reliable match. I tried to fix these by increasing the cropping to cut out these bad areas for the 3 images, but was not successful.
           </p>
         </section>
+
 
 
         <!-- Naive Alignment Comparison -->
