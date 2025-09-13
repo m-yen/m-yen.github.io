@@ -27,6 +27,46 @@
     <!-- Main Content Container -->
     <main class="container mx-auto mt-12 p-6 md:p-10 bg-white rounded-xl shadow-lg space-y-12">
 
+        <!-- Discussion Notes Section -->
+        <section id="discussion" class="max-w-3xl mx-auto px-4 mt-12 mb-12">
+          <h2 class="text-2xl font-semibold mb-4">Discussion Notes</h2>
+        
+          <h3 class="text-xl font-semibold mt-6 mb-2">Naive Alignment</h3>
+          <p class="leading-relaxed">
+            Write here about how the naive method works, the search window size, 
+            when it performs well (e.g., small images like cathedral, church), 
+            and when it fails (e.g., emir with large displacements).
+          </p>
+        
+          <h3 class="text-xl font-semibold mt-6 mb-2">Pyramid Alignment</h3>
+          <p class="leading-relaxed">
+            Discuss the pyramid approach, how it aligns from low → high resolution, 
+            and why it works better on large images. Mention improvements you observed 
+            on images like emir and harvesters.
+          </p>
+        
+          <h3 class="text-xl font-semibold mt-6 mb-2">Metrics (L2 vs NCC)</h3>
+          <p class="leading-relaxed">
+            Compare L2 distance and Normalized Cross-Correlation (NCC). 
+            L2 is simple but brightness-sensitive, while NCC is more robust to 
+            intensity differences. Note which worked better in your results.
+          </p>
+        
+          <h3 class="text-xl font-semibold mt-6 mb-2">Edge-based Alignment</h3>
+          <p class="leading-relaxed">
+            Add notes about using edges (like Sobel filters) for alignment. 
+            When did this help reduce artifacts? When did it hurt performance?
+          </p>
+        
+          <h3 class="text-xl font-semibold mt-6 mb-2">Final Thoughts</h3>
+          <p class="leading-relaxed">
+            Wrap up with the method that gave you the best overall performance 
+            (likely pyramid + NCC). Mention lessons learned and possible future improvements 
+            (cropping borders, better edge detection, histogram equalization).
+          </p>
+        </section>
+
+
         <!-- Naive Alignment Comparison -->
         <section>
             <h2 class="text-3xl font-bold text-slate-900 mb-6">Naive Alignment Comparison</h2>
