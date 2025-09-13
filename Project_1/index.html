@@ -22,7 +22,7 @@
             color: #2c3e50;
             text-align: center;
         }
-        .project-intro, .project-section, .project-methodology {
+        .project-intro, .project-section, .project-methodology, .project-issues, .project-failures {
             background: #fff;
             padding: 20px;
             margin-bottom: 20px;
@@ -102,6 +102,37 @@
                     <li><strong>Efficiency</strong>: This hierarchical search significantly reduces the search space at each level. Instead of searching `N x N` pixels at full resolution, you search a small window around a known good estimate. This makes the process much faster, especially for very large images.</li>
                 </ul>
             </div>
+        </div>
+
+        <div class="project-issues">
+            <h2>Issues Encountered</h2>
+            <p>This project presented several technical challenges, primarily related to <strong>performance and parameter optimization</strong>. Key issues included:</p>
+            
+            <h3>1. Pyramid Generation and Propagation</h3>
+            <p>The initial implementation of the Gaussian pyramid and the upward propagation of displacement shifts was difficult. A significant hurdle was ensuring that the shifts were correctly scaled at each level of the pyramid. A simple `dx *= 2` and `dy *= 2` was effective for propagating the displacement, but correctly applying the `np.roll` function to the images at each level to shift them before the next round of fine-tuning was tricky to implement without errors.</p>
+            
+            <h3>2. Parameter Tuning</h3>
+            <p>Determining the optimal parameters for the alignment algorithm was a major challenge. This involved choosing:</p>
+            <ul>
+                <li><strong>Search Window Size:</strong> A window that was too small risked missing the correct alignment, while a window that was too large significantly increased the computational time.</li>
+                <li><strong>Best Metric:</strong> While <strong>Normalized Cross-Correlation (NCC)</strong> proved to be the most robust metric, other metrics like L2 distance (Sum of Squared Differences) were initially tested. L2 was found to be highly sensitive to brightness and contrast variations, making it unsuitable for many of the images.</li>
+                <li><strong>Border Cropping:</strong> Cropping the borders of the images was necessary to remove black or white edges that skewed the alignment metric. Finding the correct percentage to crop was a trial-and-error process to ensure enough of the image's core content was preserved for a reliable match.</li>
+            </ul>
+
+            <h3>3. Runtime Optimization</h3>
+            <p>For high-resolution images, the initial brute-force approach had unacceptably long <strong>runtimes</strong>. The main bottleneck was the nested loops used to search for the best displacement. This was resolved by implementing the <strong>multiscale image pyramid</strong>, which drastically reduced the search space. Fine-tuning the slicing and cropping operations on the image arrays also led to notable performance improvements.</p>
+        </div>
+
+        <div class="project-failures">
+            <h2>Analysis of Failed Images</h2>
+            <p>A few images presented significant challenges for the alignment algorithm, primarily due to <strong>brightness inconsistencies</strong> and <strong>large displacements</strong> between the color channels. The images with the most notable failures were `emir.jpg`, `melons.jpg`, and `self_portrait.jpg`.</p>
+            
+            <h3>`emir.jpg`</h3>
+            <p>This image failed to align correctly, most likely because of <strong>dramatic brightness and contrast variations</strong> between its color channels. The difference in lighting conditions captured by each exposure likely led to an inaccurate correlation score, causing the algorithm to fail. 
+            </p>
+            <h3>`melons.jpg` & `self_portrait.jpg`</h3>
+            <p>Both of these images feature large, dark, and <strong>underexposed areas</strong> (shadows). These dark regions have minimal feature information and low intensity variance. This makes it difficult for the Normalized Cross-Correlation (NCC) metric to find a reliable match, as the low-variance pixel data is essentially "flat." The algorithm is therefore easily misled, resulting in an incorrect displacement being chosen.
+            </p>
         </div>
 
         <div class="project-section">
@@ -263,7 +294,7 @@
         </div>
 
         <div class="project-section">
-            <h2>Results from simple Align</h2>
+            <h2>Naive Align</h2>
             <p>These are the images processed with a different set of parameters or algorithm.</p>
 
             <div class="image-container">
