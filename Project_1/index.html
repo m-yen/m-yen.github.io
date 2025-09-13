@@ -33,29 +33,70 @@
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Project Overview</h3>
           <p class="leading-relaxed">
-            Write here about how the naive method works, the search window size, 
-            when it performs well (e.g., small images like cathedral, church), 
-            and when it fails (e.g., emir with large displacements).
+            Sergei Mikhailovich Prokudin-Gorskii (1863–1944) was a pioneering photographer who foresaw 
+            the potential of color photography over a century ago. Starting in 1907, he traveled across 
+            the Russian Empire under special permission from the Tsar, capturing thousands of color photographs 
+            of people, buildings, landscapes, and infrastructure. 
           </p>
+          <p class="leading-relaxed mt-2">
+            The goal of this project is to take the digitized Prokudin-Gorskii glass plates and 
+            automatically produce full-color images using image processing techniques. This involves:
+          </p>
+          <ul class="list-disc list-inside leading-relaxed mt-2">
+            <li>Extracting the three color channels (B, G, R) from each glass plate.</li>
+            <li>Aligning the channels to account for small displacements between exposures.</li>
+            <li>Stacking the channels to create a single RGB image with minimal visual artifacts.</li>
+          </ul>
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Approach</h3>
           <p class="leading-relaxed">
-            Discuss the pyramid approach, how it aligns from low → high resolution, 
-            and why it works better on large images. Mention improvements you observed 
-            on images like emir and harvesters.
+            Two methods were implemented: brute-force alignment and pyramid-based alignment.
           </p>
+          <p class="leading-relaxed mt-2">
+            <strong>1. Brute-Force Alignment:</strong> Implemented in the <code>GlassPlate</code> class.  
+            It systematically checks every possible displacement within a defined search window.
+          </p>
+          <ul class="list-disc list-inside leading-relaxed mt-2">
+            <li><code>trim_colors()</code>: Divides the glass plate into B, G, R channels.</li>
+            <li><code>find_best_align()</code>: Iterates over horizontal (dx) and vertical (dy) shifts within a radius, 
+                using Normalized Cross-Correlation (NCC) as the metric.</li>
+            <li><code>align_two_colors()</code>: Applies the best shifts with <code>np.roll()</code>.</li>
+            <li><code>align_colors()</code>: Aligns green and red to blue and stacks the final image.</li>
+          </ul>
+          <p class="leading-relaxed mt-4">
+            <strong>2. Pyramid-Based Alignment:</strong> Implemented in the <code>GlassPlatePyramid</code> class 
+            to handle large, high-resolution images more efficiently.
+          </p>
+          <ul class="list-disc list-inside leading-relaxed mt-2">
+            <li><code>build_gaussian_pyramid()</code>: Creates progressively smaller versions of the image.</li>
+            <li><code>align_from_pyramids()</code>: Finds rough alignment on the smallest image, then refines upward.</li>
+            <li>Displacements are scaled and refined at each level, greatly reducing search time.</li>
+          </ul>
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Problems</h3>
           <p class="leading-relaxed">
-            Compare L2 distance and Normalized Cross-Correlation (NCC). 
-            L2 is simple but brightness-sensitive, while NCC is more robust to 
-            intensity differences. Note which worked better in your results.
+            Several technical challenges arose during the project:
           </p>
+          <ul class="list-disc list-inside leading-relaxed mt-2">
+            <li><strong>Pyramid generation and propagation:</strong> Scaling and applying shifts correctly between levels was tricky. 
+                A simple <code>dx *= 2</code>, <code>dy *= 2</code> worked, but handling <code>np.roll</code> carefully was essential.</li>
+            <li><strong>Parameter tuning:</strong> Choosing the search window size, metric, and border cropping was a trial-and-error process. 
+                NCC outperformed L2 since L2 was highly sensitive to brightness differences.</li>
+            <li><strong>Runtime optimization:</strong> Brute-force was very slow on high-res images. 
+                The pyramid method drastically reduced search space, making it practical.</li>
+          </ul>
         
           <h3 class="text-xl font-semibold mt-6 mb-2">Failed Images</h3>
           <p class="leading-relaxed">
-            Add notes about using edges (like Sobel filters) for alignment. 
-            When did this help reduce artifacts? When did it hurt performance?
+            Some images were especially difficult due to brightness inconsistencies and large displacements.
+          </p>
+          <p class="leading-relaxed mt-2">
+            <strong>emir.jpg:</strong> Failed because of dramatic brightness and contrast variations between channels, 
+            which misled the correlation metric.
+          </p>
+          <p class="leading-relaxed mt-2">
+            <strong>melons.jpg & self_portrait.jpg:</strong> Both contained large, dark underexposed regions with very low variance. 
+            These "flat" areas provided little signal for NCC, leading to poor alignment.
           </p>
         </section>
 
