@@ -275,8 +275,8 @@
                         <p class="p-2 text-xs font-medium text-center text-gray-700">Original Cathedral</p>
                     </div>
                     <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/cathedral_gauss_k10.jpg" alt="Blurred Cathedral Image">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blurred Version (Gaussian $\sigma=10$)</p>
+                        <img class="image-placeholder" src="./output_images/cathedral_gauss_k1.jpg" alt="Blurred Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blurred Version (Gaussian sigma=1)</p>
                     </div>
                     <div class="image-container bg-white rounded-lg overflow-hidden">
                         <img class="image-placeholder" src="./output_images/cathedral_laplace_adjusted_k1.jpg" alt="High-Frequency Layer Image">
@@ -287,25 +287,83 @@
                         <p class="p-2 text-xs font-medium text-center text-gray-700">Sharpened Version (k=1)</p>
                     </div>
                 </div>
-                <h4 class="text-xl font-medium text-gray-500 mb-3">Varying Sharpening Amount (k) and Image Input</h4>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Cathedral Sharpening Process (k=10)</h4>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                     <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/book_sharp_k1.jpg" alt="Sharpened Book Image with k=1">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Book Sharpened (k=1)</p>
+                        <img class="image-placeholder" src="./output_images/cathedral_original.jpg" alt="Original Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Original Cathedral</p>
                     </div>
                     <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/book_sharp_k10.jpg" alt="Sharpened Book Image with k=10">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Book Sharpened (k=10)</p>
+                        <img class="image-placeholder" src="./output_images/cathedral_gauss_k10.jpg" alt="Blurred Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blurred Version (Gaussian sigma=10)</p>
                     </div>
                     <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/cathedral_sharp_k10.jpg" alt="Sharpened Cathedral Image with k=10">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Cathedral Sharpened (k=10) - Over-sharpened</p>
+                        <img class="image-placeholder" src="./output_images/cathedral_laplace_adjusted_k10.jpg" alt="High-Frequency Layer Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">High-Frequency Layer (Laplacian)</p>
                     </div>
                     <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/ladybug_box_blur_sharp.jpg" alt="Sharpened version of another image">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Ladybug Box Blur Sharpened</p>
+                        <img class="image-placeholder" src="./output_images/cathedral_sharp_k10.jpg" alt="Sharpened Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Sharpened Version (k=10)</p>
                     </div>
                 </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Book Sharpening Process (k=1)</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_original.jpg" alt="Original Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Original Book</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_gauss_k1.jpg" alt="Blurred Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blurred Version (Gaussian sigma=1)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_laplace_adjusted_k1.jpg" alt="High-Frequency Layer Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">High-Frequency Layer (Laplacian)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_sharp_k1.jpg" alt="Sharpened Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Sharpened Version (k=1)</p>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Book Sharpening Process (k=10)</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_original.jpg" alt="Original Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Original Book</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_gauss_k10.jpg" alt="Blurred Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blurred Version (Gaussian sigma=10)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_laplace_adjusted_k10.jpg" alt="High-Frequency Layer Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">High-Frequency Layer (Laplacian)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_sharp_k10.jpg" alt="Sharpened Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Sharpened Version (k=10)</p>
+                    </div>
+                </div>
+                
+               <h4 class="text-xl font-medium text-gray-500 mb-3">Blurring and Resharpening Image</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/ladybug_original.jpg" alt="Original Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Original Ladybug</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/ladybug_box_blur.jpg" alt="Blurred Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blurred Version (Box Filter)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/ladybug_box_blur_sharp.jpg" alt="Sharpened Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Sharpened Version</p>
+                    </div>
+                </div>
+                
             </div>
 
             <!-- Part 2.2: Hybrid Images -->
