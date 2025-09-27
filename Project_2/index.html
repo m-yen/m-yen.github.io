@@ -57,7 +57,24 @@
                     <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 1.1:</p>
                     <div id="explanation-1-1" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
                         <p class="italic text-gray-400">
-                            [Explanation for Part 1.1 goes here: Explain your implementation of convolution here, including details on numpy vs scipy, runtime comparison, and how you handled boundary conditions.]
+
+                            Used a 9x9 box filter on a selfie of myself comparing a convolution implementation of 4  for loops, 2 for loops, and using scipy. They took 52, 8, and 0.3 seconds respectively and all were implemnented by padding wiht 0s and maintaining the original dimensions. 
+                            
+                            Code: selfie = ImageWrapper(".\images\selfie.jpg")
+selfie.display()
+
+filter = utils.create_box_filter(9)
+selfie.apply_filter_lib(filter, save=True, name="lib_box_blur")
+selfie.apply_filter_2(filter, save=True, name="2_box_blur")
+temp = selfie.apply_filter_4(filter, save=True, name="4_box_blur")
+dx = np.array([[1, 0 ,-1]])
+selfie.apply_filter_lib(dx, save=True, name="lib_dx")
+selfie.apply_filter_2(dx, save=True, name="2_dx")
+selfie.apply_filter_4(dx, save=True, name="4_dx")
+dy = dx.T
+selfie.apply_filter_lib(dy, save=True, name="lib_dy")
+selfie.apply_filter_2(dy, save=True, name="2_dy")
+selfie.apply_filter_4(dy, save=True, name="4_dy")
                         </p>
                     </div>
                 </div>
@@ -123,8 +140,10 @@
                     <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 1.2:</p>
                     <div id="explanation-1-2" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
                         <p class="italic text-gray-400">
-                            [Explanation for Part 1.2 goes here: Explain how you calculated the partial derivatives, the gradient magnitude, and the thresholding used for the binarized edge image. Justify your tradeoff decision.]
-                        </p>
+                            I applied the Dx and Dy filters to the cameraman image and got the gradient magnitude image by using sqrt(dx**2 + dy**2). From there I thresholded the gradient image to eliminate noise, which I determined to be everything except the man and the camera. The threshold was 70.
+
+                     </p>
+                        
                     </div>
                 </div>
 
@@ -162,7 +181,11 @@
                     <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 1.3:</p>
                     <div id="explanation-1-3" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
                         <p class="italic text-gray-400">
-                            [Explanation for Part 1.3 goes here: Describe how you constructed the Gaussian and DoG filters and your process for application. Compare the results to the finite difference method, noting the impact of noise.]
+
+                            I then did the same process, except applying a gaussian filter before taking the derivatives. I found that this allowed me to eliminate noise easier, with only a threshold of 20. The gradient image was also "fuzzier" due to the pixel peaks being more smooth.
+   
+                            I then did the same thing, but convolved the gaussian filter and derivative filters before convolving with the image. The goal here was to reduce runtime by using the assciative principle of convolution. The final product was the same as convolving with the gaussian and derivatives individually.
+    
                         </p>
                     </div>
                 </div>
@@ -263,7 +286,7 @@
                     <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 2.1:</p>
                     <div id="explanation-2-1" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
                         <p class="italic text-gray-400">
-                            [Explanation for Part 2.1 goes here: Explain the principle of the unsharp mask filter, its relationship to blur and high frequencies, and how varying the sharpening amount affects the result.]
+                            Here I took an image and sharpened it by taking readding high frequencies into the image. This was done by convolving with a gaussian to get the lowfrequencies and then subtracting from the original image to get the high. These were then readded to make the image "pop". I also showed how this affect changes when this is done repeatedly, with 10 layers of sharpening. I also took a high res picture, blurred it, then resharpened it, and found that the original image was returned.    
                         </p>
                     </div>
                 </div>
@@ -375,7 +398,7 @@
                     <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 2.2:</p>
                     <div id="explanation-2-2" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
                         <p class="italic text-gray-400">
-                            [Explanation for Part 2.2 goes here: Describe the steps taken to create the hybrid images, including image alignment, filter choices (low/high pass), and how you determined the cutoff frequency for the Derek + Nutmeg example.]
+                            Here I took the high frequencies of one image, by blurring and subtracting the blurred image from the original, and the low frequencies of another, by just blurring, and added them together to get a hybrid image. With the hybrid, you can see the high frequency image when looking at it, but when squniting, you will see the low frequency image more.    
                         </p>
                     </div>
                 </div>
@@ -463,6 +486,13 @@
                 </div>
             </div>
 
+
+        <div id="explanation-2-2" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
+                        <p class="italic text-gray-400">
+                            Here I combined two images in such a way that the seam between the images aren't obivous. This was done by making laplacian stacks of both images, by repeatedly blurring and subtracting from the original image, making a laplacin stack of the combination mask (for the ornage and apple it was a vertical line) and multiplying then collapsing the image stacks with the mask stack.
+                            I then did this with an circlar mask using a tatoo and a woman's arm (although due to the size mismatch of the original images, the tatoo was not fully captured and looks more like a bruise) as well as combining two paintings, stitching one's forground into the other's.
+                        </p>
+        </div>
             <!-- Orange Gaussian Pyramid Visualization -->
         <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Orange Gaussian Visualization</h4>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
@@ -592,21 +622,16 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
                 <img src="./output_images/bruise.png" alt="Custom Blend 2 Result with Irregular Mask">
-                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Custom Blend 2 (Irregular Mask Element)</p>
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Custom Blend 1 (Irregular Mask Element)</p>
             </div>
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
                 <img src="./output_images/painting_merge.png" alt="Custom Blend 2 Result with Irregular Mask">
-                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Custom Blend 2 (Irregular Mask Element)</p>
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Custom Blend 2</p>
             </div>
         </div>
 
         </section>
     </main>
-
-    <footer class="text-center mt-12 p-4 text-gray-500 text-sm">
-        <p>Results template generated by Gemini.</p>
-        <p>Ensure that the path `./output_images/` correctly leads to your images when viewing the report.</p>
-    </footer>
 
 </body>
 </html>
