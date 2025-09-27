@@ -183,15 +183,31 @@
                     </div>
                 </div>
 
-                <div class="mb-6 p-4 border border-gray-300 bg-gray-50 rounded-lg">
-                    <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 1.2:</p>
-                    <div id="explanation-1-2" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
-                        <p class="italic text-gray-400">
-                            Running DoG on Image.
-                        </p>
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Smoothing then Derivitive</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gaussian_blur.jpg" alt="Partial Derivative X Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blurred Original</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_dx.jpg" alt="Partial Derivative X Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Dx</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_dy.jpg" alt="Partial Derivative Y Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Dy</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag.jpg" alt="Gradient Magnitude Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gradient Magnitude</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag_thresh.jpg" alt="Binarized Edge Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Binarized Edge Image</p>
                     </div>
                 </div>
 
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Smoothing and Derivitive at Once</h4>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="image-container bg-white rounded-lg overflow-hidden">
                         <img class="image-placeholder" src="./output_images/cameraman_gauss_dx_1_step.jpg" alt="Partial Derivative X Image">
@@ -216,11 +232,11 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="image-container bg-white rounded-lg overflow-hidden">
                         <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag.jpg" alt="Two-Step Gradient Magnitude">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Magnitude (Two-Step $G * \nabla I$)</p>
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Magnitude (Two-Step)</p>
                     </div>
                     <div class="image-container bg-white rounded-lg overflow-hidden">
                         <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag_1_step.jpg" alt="One-Step Gradient Magnitude">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Magnitude (One-Step $\nabla G * I$)</p>
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Magnitude (One-Step)</p>
                     </div>
                     <div class="image-container bg-white rounded-lg overflow-hidden">
                         <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag_thresh.jpg" alt="Two-Step Binarized Edges">
