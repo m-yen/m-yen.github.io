@@ -185,18 +185,7 @@
 
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/gauss_kernel_large.png" alt="Partial Derivative X Image">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gaussian</p>
-                    </div>
-                    <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/dx_gauss_kernel_large.png" alt="Partial Derivative X Image">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Horizontal Gaussian Derivative</p>
-                    </div>
-                    <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/dy_gauss_kernel_large.png" alt="Partial Derivative X Image">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Vertical Gaussian Derivative</p>
-                    </div>
+                    
                     <div class="image-container bg-white rounded-lg overflow-hidden">
                         <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag_1_step.jpg" alt="Gradient Magnitude Image">
                         <p class="p-2 text-xs font-medium text-center text-gray-700">Gradient Magnitude</p>
@@ -224,16 +213,24 @@
                     </div>
                 </div>
 
-                <h4 class="text-xl font-medium text-gray-500 mb-3">Filter Visualizations and Smoothing Result</h4>
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Gaussian Derivative Visualization</h4>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                     <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/gauss_kernel_large.png" alt="Gaussian Filter Visualization">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gaussian Kernel (2D Plot)</p>
+                        <img class="image-placeholder" src="./output_images/gauss_kernel_large.png" alt="Partial Derivative X Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gaussian</p>
                     </div>
                     <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/dx_gauss_kernel_large.png" alt="Derivative of Gaussian Filter Visualization">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Deriv. of Gaussian Filter (X)</p>
+                        <img class="image-placeholder" src="./output_images/dx_gauss_kernel_large.png" alt="Partial Derivative X Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Horizontal Gaussian Derivative</p>
                     </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/dy_gauss_kernel_large.png" alt="Partial Derivative X Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Vertical Gaussian Derivative</p>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Filter Visualizations and Smoothing Result</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                     <div class="image-container bg-white rounded-lg overflow-hidden">
                         <img class="image-placeholder" src="./output_images/cameraman_gaussian_blur.jpg" alt="Gaussian Smoothed Cameraman Image (Custom)">
                         <p class="p-2 text-xs font-medium text-center text-gray-700">Smoothed (Custom $G*I$)</p>
@@ -243,18 +240,7 @@
                         <p class="p-2 text-xs font-medium text-center text-gray-700">Smoothed (Library Filter)</p>
                     </div>
                 </div>
-                
-                <h4 class="text-xl font-medium text-gray-500 mb-3">Gaussian Derivative Visualization</h4>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/cameraman_gauss_dx.jpg" alt="Gaussian Derivative X">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gaussian Deriv. $G * I_x$</p>
-                    </div>
-                    <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <img class="image-placeholder" src="./output_images/cameraman_gauss_dy.jpg" alt="Gaussian Derivative Y">
-                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gaussian Deriv. $G * I_y$</p>
-                    </div>
-                </div>
+            
 
                 <h4 class="text-xl font-medium text-gray-500 mb-3">Gradient Magnitude and Binarization (Two-Step vs. One-Step)</h4>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
