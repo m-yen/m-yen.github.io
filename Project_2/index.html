@@ -464,7 +464,7 @@
             </div>
 
             <!-- Orange Gaussian Pyramid Visualization -->
-        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Orange Gaussian Pyramid Visualization</h4>
+        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Orange Gaussian Visualization</h4>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
                 <img src="./output_images/orange_gauss_level_0.png" alt="Orange Gaussian Stack Level 0">
@@ -480,8 +480,59 @@
             </div>
         </div>
 
+        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Orange Laplacian Visualization</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/orange_laplace_level_0.png" alt="Apple Laplacian Stack Level 0">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Laplacian Stack (Level 0 - High Detail)</p>
+            </div>
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/orange_laplace_level_10.png" alt="Apple Laplacian Stack Level 10">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Laplacian Stack (Level 10 - Mid Detail)</p>
+            </div>
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/orange_laplace_level_100.png" alt="Apple Laplacian Stack Level 100">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Laplacian Stack (Level 100 - Low Detail)</p>
+            </div>
+        </div>
+
+
+        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Orange Masked Laplacian Visualization</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/mask_orange_laplace_level_0.png" alt="Apple Laplacian Stack Level 0">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Masked Laplacian Stack (Level 0 - High Detail)</p>
+            </div>
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/mask_orange_laplace_level_10.png" alt="Apple Laplacian Stack Level 10">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Masked Laplacian Stack (Level 10 - Mid Detail)</p>
+            </div>
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/mask_orange_laplace_level_100.png" alt="Apple Laplacian Stack Level 100">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Masked Laplacian Stack (Level 100 - Low Detail)</p>
+            </div>
+        </div>
+            
+
+        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Apple Gaussian Visualization</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/apple_gauss_level_0.png" alt="Orange Gaussian Stack Level 0">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Gaussian Stack (Level 0 - Original)</p>
+            </div>
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/apple_gauss_level_10.png" alt="Orange Gaussian Stack Level 10">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Gaussian Stack (Level 10 - Mid-Frequency)</p>
+            </div>
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/apple_gauss_level_100.png" alt="Orange Gaussian Stack Level 100">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Gaussian Stack (Level 100 - Low-Frequency)</p>
+            </div>
+        </div>
+        
+
         <!-- Apple Laplacian Pyramid Visualization -->
-        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Apple Laplacian Pyramid Visualization</h4>
+        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Apple Laplacian Visualization</h4>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
                 <img src="./output_images/apple_laplace_level_0.png" alt="Apple Laplacian Stack Level 0">
@@ -497,24 +548,42 @@
             </div>
         </div>
 
-        <!-- Laplacian Stack Components & Blended Stacks -->
-        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Mask & Blended Laplacian Components</h4>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Apple Masked Laplacian Visualization</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-                <img src="./output_images/mask_apple_laplace_level_0.png" alt="Mask Laplacian Stack Level 0">
-                <p class="p-2 text-xs font-medium text-center text-gray-700 bg-gray-50">Mask Laplace Stack (Level 0)</p>
+                <img src="./output_images/mask_apple_laplace_level_0.png" alt="Apple Laplacian Stack Level 0">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Masked Laplacian Stack (Level 0 - High Detail)</p>
             </div>
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-                <img src="./output_images/mask_apple_laplace_level_10.png" alt="Mask Laplacian Stack Level 10">
-                <p class="p-2 text-xs font-medium text-center text-gray-700 bg-gray-50">Mask Laplace Stack (Level 10)</p>
+                <img src="./output_images/mask_apple_laplace_level_10.png" alt="Apple Laplacian Stack Level 10">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Masked Laplacian Stack (Level 10 - Mid Detail)</p>
             </div>
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-                <img src="./output_images/blended_stack_level_0.png" alt="Blended Stack Level 0">
-                <p class="p-2 text-xs font-medium text-center text-gray-700 bg-gray-50">Blended Stack (Level 0)</p>
+                <img src="./output_images/mask_apple_laplace_level_100.png" alt="Apple Laplacian Stack Level 100">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Masked Laplacian Stack (Level 100 - Low Detail)</p>
+            </div>
+        </div>
+
+        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Combined Laplacian Visualization</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/blended_stack_level_0.png" alt="Apple Laplacian Stack Level 0">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Combined Laplacian Stack (Level 0 - High Detail)</p>
             </div>
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-                <img src="./output_images/blended_stack_level_10.png" alt="Blended Stack Level 10">
-                <p class="p-2 text-xs font-medium text-center text-gray-700 bg-gray-50">Blended Stack (Level 10)</p>
+                <img src="./output_images/blended_stack_level_10.png" alt="Apple Laplacian Stack Level 10">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Combined Laplacian Stack (Level 10 - Mid Detail)</p>
+            </div>
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/blended_stack_level_100.png" alt="Apple Laplacian Stack Level 100">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Combined Laplacian Stack (Level 100 - Low Detail)</p>
+            </div>
+        </div>
+
+        <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Final Product</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
+            <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+                <img src="./output_images/blended_image.png" alt="Orange Gaussian Stack Level 0">
             </div>
         </div>
 
@@ -522,11 +591,11 @@
         <h4 class="text-2xl font-semibold text-gray-600 mb-4 mt-8">Custom Blended Images</h4>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-                <img src="./output_images/blended_stack_level_100.png" alt="Custom Blend 1 Result with Straight Mask (Low Frequency)">
-                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Custom Blend 1 (Straight Mask - Low Freq)</p>
+                <img src="./output_images/bruise.png" alt="Custom Blend 2 Result with Irregular Mask">
+                <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Custom Blend 2 (Irregular Mask Element)</p>
             </div>
             <div class="image-container bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-                <img src="./output_images/bruise.png" alt="Custom Blend 2 Result with Irregular Mask">
+                <img src="./output_images/painting_merge.png" alt="Custom Blend 2 Result with Irregular Mask">
                 <p class="p-3 text-sm font-medium text-center text-gray-700 bg-gray-50">Custom Blend 2 (Irregular Mask Element)</p>
             </div>
         </div>
