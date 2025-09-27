@@ -27,6 +27,84 @@
     <!-- Main Content Container -->
     <main class="container mx-auto mt-12 p-6 md:p-10 bg-white rounded-xl shadow-lg space-y-12">
 
+        <!-- Discussion Notes Section -->
+        <section id="discussion" class="max-w-3xl mx-auto px-4 mt-12 mb-12">
+          <h2 class="text-2xl font-semibold mb-4">Notes</h2>
+        
+          <h3 class="text-xl font-semibold mt-6 mb-2">Project Overview</h3>
+          <p class="leading-relaxed">
+            The goal of this project is to reconstruct color images from the digitized 
+            glass plate negatives of Sergei Mikhailovich Prokudin-Gorskii, a pioneer 
+            of early color photography in the Russian Empire. Each plate contains 
+            three grayscale exposures of the same scene, taken with red, green, 
+            and blue filters. To form a single color image, the three channels must 
+            be carefully aligned, since even small displacements create visible 
+            artifacts. The project focuses on developing methods to extract the 
+            three channels, align them, and stack them into coherent RGB images.
+          </p>
+        
+          <h3 class="text-xl font-semibold mt-6 mb-2">Approach</h3>
+          <p class="leading-relaxed">
+            Two main alignment algorithms were implemented: the brute-force method and the pyramid-based method. 
+            Both aim to compute the best relative shift (horizontal and vertical) between channels to align them correctly.
+          </p>
+        
+          <ul class="leading-relaxed list-disc pl-5">
+            <li>
+              <strong>Naive (Brute-Force) Alignment:</strong> 
+              This method works by systematically testing all possible shifts within a defined search window. 
+              For each possible shift, the algorithm compares the reference channel (usually blue) with the target channel (green or red) and computes a score that measures how well they match. 
+              Two metrics are commonly used:
+              <ul class="list-disc pl-5">
+                <li><strong>L2 distance:</strong> Measures the sum of squared differences between pixels. Smaller differences indicate better alignment. Sensitive to brightness changes.</li>
+                <li><strong>Normalized Cross-Correlation (NCC):</strong> Measures similarity while accounting for brightness and contrast differences. More robust than L2.</li>
+              </ul>
+              After evaluating all shifts, the algorithm selects the shift with the highest score and applies it to the target channel using a simple image shift. 
+              The same process is repeated for the other channel. While this method is straightforward, the computation grows quickly with image size and search window radius.
+            </li>
+        
+            <li>
+              <strong>Pyramid-Based Alignment:</strong> 
+              The pyramid algorithm is designed to efficiently handle large, high-resolution images with potentially large displacements. 
+              Its key idea is to align images starting from a downsampled, low-resolution version and progressively refine the alignment at higher resolutions:
+              <ol class="list-decimal pl-5">
+                <li>Build a <strong>Gaussian pyramid</strong> for each channel: repeatedly blur and downsample the image to create smaller versions.</li>
+                <li>Start at the smallest level of the pyramid. Perform a limited search around the current estimate to find the best shift between channels.</li>
+                <li>Propagate the estimated shift to the next higher resolution by scaling it appropriately (usually doubling the shift values).</li>
+                <li>Refine the alignment at the higher level by searching a small window around the propagated shift.</li>
+                <li>Repeat this process until reaching the full-resolution image, resulting in an accurate alignment with far less computation than brute-force at full resolution.</li>
+              </ol>
+              This hierarchical, coarse-to-fine approach significantly reduces the search space and allows the algorithm to handle images with large displacements efficiently.
+            </li>
+          </ul>
+        
+          <h3 class="text-xl font-semibold mt-6 mb-2">Problems</h3>
+          <p class="leading-relaxed">
+            One difficulty was 
+            selecting the right search window size. In the code, we would take two channels and use a "window" of displacements to search. However, if the window is too small, the correct 
+            displacement could be missed, and if too large, the computation became 
+            expensive. The pyramid method helped mitigate this issue by reducing 
+            the search space at each scale. However for the pyramid as well, work had to be done to figure out how much to change the window size at each level.
+
+          </p>
+        
+          <h3 class="text-xl font-semibold mt-6 mb-2">Failed Images</h3>
+          <p class="leading-relaxed">
+            A few images were problematic. 
+            <em>emir.jpg</em> in particular failed due to dramatic brightness and 
+            contrast differences between the three exposures, which caused the 
+            correlation metric to misalign the channels. Other images like 
+            <em>melons.jpg</em> and <em>self_portrait.jpg</em> contained large 
+            dark regions with little texture or variation. These low-contrast 
+            areas provided insufficient information for the algorithm to find 
+            a reliable match. I tried to fix these by increasing the cropping to cut out these bad areas for the 3 images, but was not successful.
+
+          </p>
+        </section>
+
+
+
+
         <!-- Naive Alignment Comparison -->
         <section>
             <h2 class="text-3xl font-bold text-slate-900 mb-6">Naive Alignment Comparison</h2>
@@ -256,7 +334,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: church.tif</h3>
-                        <img src="./original_images/church.tif" alt="Original church.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/church.jpg" alt="Original church.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -277,7 +355,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: emir.tif</h3>
-                        <img src="./original_images/emir.tif" alt="Original emir.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/emir.jpg" alt="Original emir.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -298,7 +376,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: harvesters.tif</h3>
-                        <img src="./original_images/harvesters.tif" alt="Original harvesters.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/harvesters.jpg" alt="Original harvesters.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -319,7 +397,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: icon.tif</h3>
-                        <img src="./original_images/icon.tif" alt="Original icon.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/icon.jpg" alt="Original icon.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -340,7 +418,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: italil.tif</h3>
-                        <img src="./original_images/italil.tif" alt="Original italil.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/italil.jpg" alt="Original italil.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -361,7 +439,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: lastochikino.tif</h3>
-                        <img src="./original_images/lastochikino.tif" alt="Original lastochikino.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/lastochikino.jpg" alt="Original lastochikino.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -382,7 +460,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: lugano.tif</h3>
-                        <img src="./original_images/lugano.tif" alt="Original lugano.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/lugano.jpg" alt="Original lugano.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -403,7 +481,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: melons.tif</h3>
-                        <img src="./original_images/melons.tif" alt="Original melons.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/melons.jpg" alt="Original melons.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -424,7 +502,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: self_portrait.tif</h3>
-                        <img src="./original_images/self_portrait.tif" alt="Original self_portrait.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/self_portrait.jpg" alt="Original self_portrait.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -445,7 +523,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: siren.tif</h3>
-                        <img src="./original_images/siren.tif" alt="Original siren.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/siren.jpg" alt="Original siren.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
@@ -466,7 +544,7 @@
                 <div class="grid grid-cols-3 gap-8 p-6 bg-slate-100 rounded-lg shadow-md">
                     <div class="flex flex-col items-center text-center">
                         <h3 class="font-semibold text-lg mb-2">Original: three_generations.tif</h3>
-                        <img src="./original_images/three_generations.tif" alt="Original three_generations.tif" class="rounded-lg max-w-full h-auto mb-2">
+                        <img src="./original_images/three_generations.jpg" alt="Original three_generations.tif" class="rounded-lg max-w-full h-auto mb-2">
                         <p class="text-sm text-slate-600">Displacements are not applicable to the original image.</p>
                     </div>
                     <div class="flex flex-col items-center text-center">
