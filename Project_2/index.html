@@ -48,7 +48,7 @@
         <section class="mb-16">
             <h2 class="section-title text-3xl font-bold text-gray-700 mb-8 pl-4">Part 1: Filters and Edges</h2>
 
-            <!-- Part 1.1: Convolution -->
+            <!-- Part 1.1-->
             <div class="bg-white p-6 rounded-lg shadow-md mb-8">
                 <h3 class="text-2xl font-semibold text-gray-600 mb-4">1.1. Convolution Comparison (Numpy vs. SciPy)</h3>
                 
@@ -63,17 +63,58 @@
                 </div>
 
                 <p class="text-gray-500 mb-4">
-                    Visual comparison of convolution results.
+                    Visual comparison of blur results.
                 </p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="image-container bg-white rounded-lg overflow-hidden">
-                        <!-- Using two different box blur results as examples for custom vs library convolution -->
-                        <img class="image-placeholder" src="./output_images/ladybug_box_blur.jpg" alt="Numpy Convolution Result">
-                        <p class="p-3 text-sm font-medium text-center text-gray-700">Result of Custom Convolution (Example: Ladybug Box Blur)</p>
+                        <img class="image-placeholder" src="./output_images/selfie_2_box_blur.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Result of 2 For Loops</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/selfie_4_box_blur.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Result of 4 For Loops</p>
                     </div>
                     <div class="image-container bg-white rounded-lg overflow-hidden">
                         <img class="image-placeholder" src="./output_images/selfie_lib_box_blur.jpg" alt="SciPy Convolve2d Result">
-                        <p class="p-3 text-sm font-medium text-center text-gray-700">Result of Library Convolution (Example: Selfie Box Blur)</p>
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Result of Library Convolution</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-gray-500 mb-4">
+                    Visual comparison of derivative results.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/selfie_2_dx.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Dx Result of 2 For Loops</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/selfie_2_dy.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Dy Result of 2 For Loops</p>
+                    </div>
+
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/selfie_4_dx.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Dx Result of 4 For Loops</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/selfie_4_dy.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Dy Result of 4 For Loops</p>
+                    </div>
+
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/selfie_lib_dx.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Dx Result of Library</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/selfie_lib_dy.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Dy Result of Library</p>
+                    </div>
+                    
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/selfie_lib_box_blur.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Result of Library Convolution</p>
                     </div>
                 </div>
             </div>
