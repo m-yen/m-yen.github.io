@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Vision Project Results</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the Inter font and overall aesthetics */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .section-title {
+            border-left: 6px solid #10b981; /* Emerald 500 */
+        }
+        .image-container {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+        .image-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 250px; /* Uniform height for placeholders */
+            object-fit: contain;
+            background-color: #e2e8f0; /* Slate 200 */
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 lg:p-12">
+
+    <header class="text-center mb-12 p-6 bg-white rounded-xl shadow-lg">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800">
+            Image Processing & Computer Vision Assignment
+        </h1>
+        <p class="text-xl text-gray-500 mt-2">Visual Results and Demonstrations</p>
+    </header>
+
+    <main class="max-w-7xl mx-auto">
+
+        <!-- Part 1: Filters and Edges -->
+        <section class="mb-16">
+            <h2 class="section-title text-3xl font-bold text-gray-700 mb-8 pl-4">Part 1: Filters and Edges</h2>
+
+            <!-- Part 1.1: Convolution -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-2xl font-semibold text-gray-600 mb-4">1.1. Convolution Comparison (Numpy vs. SciPy)</h3>
+                
+                <!-- Static Display for Explanation 1.1 -->
+                <div class="mb-6 p-4 border border-gray-300 bg-gray-50 rounded-lg">
+                    <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 1.1:</p>
+                    <div id="explanation-1-1" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
+                        <p class="italic text-gray-400">
+                            [Explanation for Part 1.1 goes here: Explain your implementation of convolution here, including details on numpy vs scipy, runtime comparison, and how you handled boundary conditions.]
+                        </p>
+                    </div>
+                </div>
+
+                <p class="text-gray-500 mb-4">
+                    Visual comparison of convolution results.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <!-- Using two different box blur results as examples for custom vs library convolution -->
+                        <img class="image-placeholder" src="./output_images/ladybug_box_blur.jpg" alt="Numpy Convolution Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Result of Custom Convolution (Example: Ladybug Box Blur)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/selfie_lib_box_blur.jpg" alt="SciPy Convolve2d Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Result of Library Convolution (Example: Selfie Box Blur)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part 1.2: Derivatives, Gradient, and Edges (Finite Difference) -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-2xl font-semibold text-gray-600 mb-4">1.2. Basic Partial Derivatives and Edge Detection (Finite Difference)</h3>
+                
+                <!-- Static Display for Explanation 1.2 -->
+                <div class="mb-6 p-4 border border-gray-300 bg-gray-50 rounded-lg">
+                    <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 1.2:</p>
+                    <div id="explanation-1-2" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
+                        <p class="italic text-gray-400">
+                            [Explanation for Part 1.2 goes here: Explain how you calculated the partial derivatives, the gradient magnitude, and the thresholding used for the binarized edge image. Justify your tradeoff decision.]
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_dx.jpg" alt="Partial Derivative X Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Finite Diff. $I_x$</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_dy.jpg" alt="Partial Derivative Y Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Finite Diff. $I_y$</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gradient_mag.jpg" alt="Gradient Magnitude Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gradient Magnitude</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gradient_mag_thresh.jpg" alt="Binarized Edge Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Binarized Edge Image</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part 1.3: Gaussian, DoG, and Comparison -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-2xl font-semibold text-gray-600 mb-4">1.3. Gaussian Smoothing and Derivative Filters</h3>
+
+                <!-- Static Display for Explanation 1.3 -->
+                <div class="mb-6 p-4 border border-gray-300 bg-gray-50 rounded-lg">
+                    <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 1.3:</p>
+                    <div id="explanation-1-3" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
+                        <p class="italic text-gray-400">
+                            [Explanation for Part 1.3 goes here: Describe how you constructed the Gaussian and DoG filters and your process for application. Compare the results to the finite difference method, noting the impact of noise.]
+                        </p>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Filter Visualizations and Smoothing Result</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/gauss_kernel_large.png" alt="Gaussian Filter Visualization">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gaussian Kernel (2D Plot)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/dx_gauss_kernel_large.png" alt="Derivative of Gaussian Filter Visualization">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Deriv. of Gaussian Filter (X)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gaussian_blur.jpg" alt="Gaussian Smoothed Cameraman Image (Custom)">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Smoothed (Custom $G*I$)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_filter_lib.jpg" alt="Gaussian Smoothed Cameraman Image (Library)">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Smoothed (Library Filter)</p>
+                    </div>
+                </div>
+                
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Gaussian Derivative Visualization</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_dx.jpg" alt="Gaussian Derivative X">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gaussian Deriv. $G * I_x$</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_dy.jpg" alt="Gaussian Derivative Y">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Gaussian Deriv. $G * I_y$</p>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Gradient Magnitude and Binarization (Two-Step vs. One-Step)</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag.jpg" alt="Two-Step Gradient Magnitude">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Magnitude (Two-Step $G * \nabla I$)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag_1_step.jpg" alt="One-Step Gradient Magnitude">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Magnitude (One-Step $\nabla G * I$)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag_thresh.jpg" alt="Two-Step Binarized Edges">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Binarized Edges (Two-Step)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cameraman_gauss_gradient_mag_thresh_1_step.jpg" alt="One-Step Binarized Edges">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Binarized Edges (One-Step)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Part 2: Applications -->
+        <section class="mb-16">
+            <h2 class="section-title text-3xl font-bold text-gray-700 mb-8 pl-4">Part 2: Applications</h2>
+
+            <!-- Part 2.1: Unsharp Mask -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-2xl font-semibold text-gray-600 mb-4">2.1. Unsharp Mask Filter (Cathedral Example)</h3>
+
+                <!-- Static Display for Explanation 2.1 -->
+                <div class="mb-6 p-4 border border-gray-300 bg-gray-50 rounded-lg">
+                    <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 2.1:</p>
+                    <div id="explanation-2-1" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
+                        <p class="italic text-gray-400">
+                            [Explanation for Part 2.1 goes here: Explain the principle of the unsharp mask filter, its relationship to blur and high frequencies, and how varying the sharpening amount affects the result.]
+                        </p>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Cathedral Sharpening Process (k=1)</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cathedral_original.jpg" alt="Original Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Original Cathedral</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cathedral_gauss_k10.jpg" alt="Blurred Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blurred Version (Gaussian $\sigma=10$)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cathedral_laplace_adjusted_k1.jpg" alt="High-Frequency Layer Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">High-Frequency Layer (Laplacian)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cathedral_sharp_k1.jpg" alt="Sharpened Cathedral Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Sharpened Version (k=1)</p>
+                    </div>
+                </div>
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Varying Sharpening Amount (k) and Image Input</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_sharp_k1.jpg" alt="Sharpened Book Image with k=1">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Book Sharpened (k=1)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/book_sharp_k10.jpg" alt="Sharpened Book Image with k=10">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Book Sharpened (k=10)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/cathedral_sharp_k10.jpg" alt="Sharpened Cathedral Image with k=10">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Cathedral Sharpened (k=10) - Over-sharpened</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/ladybug_box_blur_sharp.jpg" alt="Sharpened version of another image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Ladybug Box Blur Sharpened</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part 2.2: Hybrid Images -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-2xl font-semibold text-gray-600 mb-4">2.2. Hybrid Images (3 Total)</h3>
+                
+                <!-- Static Display for Explanation 2.2 -->
+                <div class="mb-6 p-4 border border-gray-300 bg-gray-50 rounded-lg">
+                    <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 2.2:</p>
+                    <div id="explanation-2-2" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
+                        <p class="italic text-gray-400">
+                            [Explanation for Part 2.2 goes here: Describe the steps taken to create the hybrid images, including image alignment, filter choices (low/high pass), and how you determined the cutoff frequency for the Derek + Nutmeg example.]
+                        </p>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Hybrid 1: Derek + Nutmeg (Full Process)</h4>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/DerekPicture_nutmeg/original_high_DerekPicture.jpg" alt="Original Derek Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Original Image 1 (Derek, Aligned)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/DerekPicture_nutmeg/original_low_nutmeg.jpg" alt="Original Nutmeg Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Original Image 2 (Nutmeg, Aligned)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/DerekPicture_nutmeg/hybrid_final_DerekPicture_nutmeg.jpg" alt="Hybrid Image Result (Derek + Nutmeg)">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Final Hybrid Image</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/DerekPicture_nutmeg/fft_high_DerekPicture.jpg" alt="Fourier Transform of Image 1">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Image 1 FFT (Log Magnitude)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/DerekPicture_nutmeg/fft_low_nutmeg.jpg" alt="Fourier Transform of Image 2">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Image 2 FFT (Log Magnitude)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/DerekPicture_nutmeg/fft_hybrid_final_DerekPicture_nutmeg.jpg" alt="Fourier Transform of Final Hybrid Image">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Final Hybrid FFT (Log Magnitude)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/DerekPicture_nutmeg/low_filtered_nutmeg.jpg" alt="Image 1 Low-Pass Filtered">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Image 2 (Low-Pass Filtered)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/DerekPicture_nutmeg/high_filtered_DerekPicture.jpg" alt="Image 2 High-Pass Filtered">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Image 1 (High-Pass Filtered)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/DerekPicture_nutmeg/fft_low_filtered_nutmeg.jpg" alt="Low Cutoff Frequency Visualization">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Low Cutoff Filter FFT (Visualization)</p>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Hybrid 2 & 3: Custom Images (Originals and Final)</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/man1_man2/original_high_man1.jpg" alt="Hybrid 2 Original Image 1">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Hybrid 2 Original 1 (Man 1)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/man1_man2/hybrid_final_man1_man2.jpg" alt="Hybrid 2 Final Result">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Hybrid 2 Final (Man 1 + Man 2)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/plane_bord/original_high_plane.jpg" alt="Hybrid 3 Original Image 1">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Hybrid 3 Original 1 (Plane)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/plane_bord/hybrid_final_plane_bord.jpg" alt="Hybrid 3 Final Result">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Hybrid 3 Final (Plane + Bord)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part 2.3 & 2.4: Image Blending (Pyramids) -->
+            <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+                <h3 class="text-2xl font-semibold text-gray-600 mb-4">2.3 & 2.4. Image Blending (Pyramids)</h3>
+
+                <!-- Static Display for Explanation 2.3 & 2.4 -->
+                <div class="mb-6 p-4 border border-gray-300 bg-gray-50 rounded-lg">
+                    <p class="block text-sm font-semibold text-gray-700 mb-2">My Explanation for Part 2.3 & 2.4:</p>
+                    <div id="explanation-2-3" class="w-full p-3 border border-gray-300 rounded-md bg-white text-sm text-gray-600 min-h-[100px] shadow-inner">
+                        <p class="italic text-gray-400">
+                            [Explanation for Part 2.3 & 2.4 goes here: Explain the process of creating the Gaussian and Laplacian stacks, the mechanism of blending in the frequency domain, and specifically how you constructed the irregular mask for one of your custom blends.]
+                        </p>
+                    </div>
+                </div>
+                
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Orange + Apple Blend (Straight Mask)</h4>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/orange_gauss_level_10.png" alt="Orange Gaussian Stack Visualization">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Orange Gaussian Stack (Level 10 Example)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/apple_laplace_level_10.png" alt="Apple Laplacian Stack Visualization">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Apple Laplacian Stack (Level 10 Example)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/blended_image.png" alt="Orange Apple Blended Result">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Final Orange/Apple Blend</p>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Laplacian Stack Components</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/mask_apple_laplace_level_0.png" alt="Figure 3.42 (a) Result">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Mask Laplace Stack (Level 0)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/mask_orange_laplace_level_10.png" alt="Figure 3.42 (b) Result">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Mask Laplace Stack (Level 10)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/blended_stack_level_0.png" alt="Figure 3.42 (c) Result">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blended Stack (Level 0)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/blended_stack_level_10.png" alt="Figure 3.42 (d) Result">
+                        <p class="p-2 text-xs font-medium text-center text-gray-700">Blended Stack (Level 10)</p>
+                    </div>
+                </div>
+
+                <h4 class="text-xl font-medium text-gray-500 mb-3">Custom Blended Images</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/blended_stack_level_100.png" alt="Custom Blend 1 Result with Straight Mask">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Custom Blend 1 (Straight Mask - Low Freq)</p>
+                    </div>
+                    <div class="image-container bg-white rounded-lg overflow-hidden">
+                        <img class="image-placeholder" src="./output_images/bruise.png" alt="Custom Blend 2 Result with Irregular Mask">
+                        <p class="p-3 text-sm font-medium text-center text-gray-700">Custom Blend 2 (Irregular Mask Element)</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="text-center mt-12 p-4 text-gray-500 text-sm">
+        <p>Results template generated by Gemini.</p>
+        <p>Ensure that the path `./output_images/` correctly leads to your images when viewing the report.</p>
+    </footer>
+
+</body>
+</html>
