@@ -77,6 +77,46 @@ dy = dx.T
 selfie.apply_filter_lib(dy, save=True, name="lib_dy")
 selfie.apply_filter_2(dy, save=True, name="2_dy")
 selfie.apply_filter_4(dy, save=True, name="4_dy")
+
+
+
+def four_loop_convolve(filter, image):
+    convolve_filter = np.flip(np.flip(filter, axis = 0), axis = 1)
+    fil_h, fil_w = convolve_filter.shape
+
+    pad_top, pad_bottom, pad_left, pad_right = find_same_pad_dim(filter, image)
+
+    pad_image = np.pad(image, ((pad_top, pad_bottom), (pad_left, pad_right)))
+
+    new_dim = get_new_image_dim(convolve_filter, pad_image)
+
+    res = np.zeros(new_dim)
+
+    for out_r in range(new_dim[0]):
+        for out_c in range(new_dim[1]):
+            box_value = 0
+            for i in range(fil_h):
+                for j in range(fil_w):
+                   box_value += pad_image[out_r + i][out_c + j] * convolve_filter[i, j]
+            res[out_r][out_c] = box_value
+    return res
+
+def two_loop_convolve(filter, image):
+    convolve_filter = np.flip(np.flip(filter, axis = 0), axis = 1)
+    fil_h, fil_w = convolve_filter.shape    
+
+    pad_top, pad_bottom, pad_left, pad_right = find_same_pad_dim(filter, image)
+
+    pad_image = np.pad(image, ((pad_top, pad_bottom), (pad_left, pad_right)), mode="constant")
+
+    new_dim = get_new_image_dim(convolve_filter, pad_image)
+
+    res = np.zeros(new_dim)
+
+    for out_r in range(new_dim[0]):
+        for out_c in range(new_dim[1]):
+            res[out_r][out_c] = np.sum(pad_image[out_r:out_r + fil_h, out_c: out_c + fil_w] * convolve_filter)
+    return res
 </code></pre>
                         </p>
                     </div>
