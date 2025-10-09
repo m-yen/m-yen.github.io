@@ -60,323 +60,305 @@
         }
     </script>
 
-    <!-- Report Container -->
     <div class="report-container mx-auto my-8 p-6 sm:p-10 rounded-xl">
 
-        <!-- Header -->
         <header class="pb-6 border-b border-gray-200 mb-8">
             <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-2">Project 3: Image Stitching and Homographies</h1>
-            <p class="text-xl text-indigo-600">CS180 / CS280A Report</p>
-            <p class="text-sm text-gray-500 mt-2">Student Name: [Your Name] | Date: October 2025</p>
         </header>
 
-        <!-- DELIVERABLE 1: Projective Transformation Examples -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-500 pl-3 py-1">Deliverable 1: Projective Transformation Examples</h2>
             <p class="text-gray-700 mb-6">
                 The image sets used for mosaic creation inherently exhibit projective transformations, as they were captured by rotating the camera around a fixed center of projection. This transformation allows planar features to be mapped between the images via a homography. Below are two clear examples of these input image pairs.
             </p>
 
-            <h3 class="text-xl font-semibold mb-3">Set 1: Transformation between street1 and street2</h3>
+            <h3 class="text-xl font-semibold mb-3">Set 1: Middle and Left</h3>
 
             <div class="grid md:grid-cols-2 gap-4 mb-6 border p-4 rounded-lg bg-gray-50">
                 <div class="space-y-2">
                     <img src="./res/street1.png" alt="Source Image street1" class="w-full rounded-md object-cover h-48">
-                    <p class="text-xs text-center text-gray-500">Source Image: street1</p>
+                    <p class="text-xs text-center text-gray-500">Source Image: Middle</p>
                 </div>
                 <div class="space-y-2">
                     <img src="./res/street2.png" alt="Source Image street2" class="w-full rounded-md object-cover h-48">
-                    <p class="text-xs text-center text-gray-500">Source Image: street2</p>
+                    <p class="text-xs text-center text-gray-500">Source Image: Left</p>
                 </div>
             </div>
 
-            <h3 class="text-xl font-semibold mb-3">Set 2: Transformation between street1 and street3</h3>
+            <h3 class="text-xl font-semibold mb-3">Set 2: Middle and Right</h3>
 
             <div class="grid md:grid-cols-2 gap-4 mb-4 border p-4 rounded-lg bg-gray-50">
                 <div class="space-y-2">
                     <img src="./res/street1.png" alt="Source Image street1" class="w-full rounded-md object-cover h-48">
-                    <p class="text-xs text-center text-gray-500">Source Image: street1</p>
+                    <p class="text-xs text-center text-gray-500">Source Image: Middle</p>
                 </div>
                 <div class="space-y-2">
                     <img src="./res/street3.png" alt="Source Image street3" class="w-full rounded-md object-cover h-48">
-                    <p class="text-xs text-center text-gray-500">Source Image: street3</p>
+                    <p class="text-xs text-center text-gray-500">Source Image: Right</p>
                 </div>
             </div>
         </section>
 
-        <!-- DELIVERABLE 2: Homography Estimation (DLT) -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-500 pl-3 py-1">Deliverable 2: Homography Computation (DLT)</h2>
             <p class="text-gray-700 mb-6">
-                The `computeH(im1_pts, im2_pts)` function was implemented using the Direct Linear Transformation (DLT) algorithm. This function takes at least four pairs of corresponding points to solve for the $3 \times 3$ homography matrix $\mathbf{H}$ that maps points from $im1$ to $im2$.
+                To perform the transformation, we must find sets of points between the two images that correspond with each other. We can then take these points and perform a least squares optimization to find the 8 unknowns necessary for the projective transformation. Due to the 8 degrees of freedom, at least 4 corresponding pairs are needed.    
             </p>
 
-            <h3 class="text-xl font-semibold mb-3">Correspondence Visualization: street1\_cor to street2\_cor</h3>
+            <h3 class="text-xl font-semibold mb-3">Correspondence Visualization: Middle to Left</h3>
             <div class="grid md:grid-cols-2 gap-4 mb-6 border p-4 rounded-lg bg-gray-50">
                 <div class="space-y-2">
                     <img src="./res/street1_cor.png" alt="Image 1 with Correspondence Points" class="w-full rounded-md object-cover h-64">
-                    <p class="text-xs text-center text-gray-500">Image 1 (Source Points $\mathbf{p}_i$)</p>
+                    <p class="text-xs text-center text-gray-500">Image 1 Source Points</p>
                 </div>
                 <div class="space-y-2">
                     <img src="./res/street2_cor.png" alt="Image 2 with Correspondence Points" class="w-full rounded-md object-cover h-64">
-                    <p class="text-xs text-center text-gray-500">Image 2 (Destination Points $\mathbf{p}'_i$)</p>
+                    <p class="text-xs text-center text-gray-500">Image 2 Source Points</p>
                 </div>
             </div>
 
             <h3 class="text-xl font-semibold mt-6 mb-3">System of Equations</h3>
             <p class="text-gray-700 mb-4">
-                For each correspondence $(\mathbf{p}_i, \mathbf{p}'_i)$, two linear equations are formed, contributing two rows to the matrix $\mathbf{A}$. With $N$ points, $\mathbf{A}$ is $2N \times 9$. We solve $\mathbf{A}\mathbf{h} = \mathbf{0}$ where $\mathbf{h}$ is the vectorized homography matrix.
+                For each correspondence two linear equations are formed, contributing two rows to the A. With N points, A is 2N x 9. We solve Ah = 0 where h is the vectorized homography matrix.
             </p>
             <div class="overflow-x-auto mb-4">
                 <pre>
-<!-- LaTeX for DLT equation system placeholder. Use $$...$$ in your final PDF document. -->
 System of Equations:
-[[    2137     1631        1        0        0        0 -7267937 -5547031]
- [       0        0        0     2137     1631        1 -3464077 -2643851]
- [    2132     1458        1        0        0        0 -7236008 -4948452]
- [       0        0        0     2132     1458        1 -3029572 -2071818]
- [    1962     1453        1        0        0        0 -6231312 -4614728]
- [       0        0        0     1962     1453        1 -2782116 -2060354]
- [    2136     1445        1        0        0        0 -7260264 -4911555]
- [       0        0        0     2136     1445        1 -3005352 -2033115]
- [    1998     1411        1        0        0        0 -6435558 -4544831]
- [       0        0        0     1998     1411        1 -2737260 -1933070]
- [    1753     1270        1        0        0        0 -5132784 -3718560]
- [       0        0        0     1753     1270        1 -2149178 -1557020]
- [    1777     1270        1        0        0        0 -5249258 -3751580]
- [       0        0        0     1777     1270        1 -2178602 -1557020]
- [    1676     1220        1        0        0        0 -4761516 -3466020]
- [       0        0        0     1676     1220        1 -1970976 -1434720]
- [    1991     1167        1        0        0        0 -6397083 -3749571]
- [       0        0        0     1991     1167        1 -2188109 -1282533]
- [    2428     1129        1        0        0        0 -9250680 -4301490]
- [       0        0        0     2428     1129        1 -2471704 -1149322]
- [    2446     1129        1        0        0        0 -9385302 -4331973]
- [       0        0        0     2446     1129        1 -2490028 -1149322]
- [    1789     1143        1        0        0        0 -5311541 -3393567]
- [       0        0        0     1789     1143        1 -1946432 -1243584]
- [    1881     1084        1        0        0        0 -5793480 -3338720]
- [       0        0        0     1881     1084        1 -1912977 -1102428]]
-                </pre>
+[[    2137     1631        1        0        0        0 -7267937 -5547031]
+ [       0        0        0     2137     1631        1 -3464077 -2643851]
+ [    2132     1458        1        0        0        0 -7236008 -4948452]
+ [       0        0        0     2132     1458        1 -3029572 -2071818]
+ [    1962     1453        1        0        0        0 -6231312 -4614728]
+ [       0        0        0     1962     1453        1 -2782116 -2060354]
+ [    2136     1445        1        0        0        0 -7260264 -4911555]
+ [       0        0        0     2136     1445        1 -3005352 -2033115]
+ [    1998     1411        1        0        0        0 -6435558 -4544831]
+ [       0        0        0     1998     1411        1 -2737260 -1933070]
+ [    1753     1270        1        0        0        0 -5132784 -3718560]
+ [       0        0        0     1753     1270        1 -2149178 -1557020]
+ [    1777     1270        1        0        0        0 -5249258 -3751580]
+ [       0        0        0     1777     1270        1 -2178602 -1557020]
+ [    1676     1220        1        0        0        0 -4761516 -3466020]
+ [       0        0        0     1676     1220        1 -1970976 -1434720]
+ [    1991     1167        1        0        0        0 -6397083 -3749571]
+ [       0        0        0     1991     1167        1 -2188109 -1282533]
+ [    2428     1129        1        0        0        0 -9250680 -4301490]
+ [       0        0        0     2428     1129        1 -2471704 -1149322]
+ [    2446     1129        1        0        0        0 -9385302 -4331973]
+ [       0        0        0     2446     1129        1 -2490028 -1149322]
+ [    1789     1143        1        0        0        0 -5311541 -3393567]
+ [       0        0        0     1789     1143        1 -1946432 -1243584]
+ [    1881     1084        1        0        0        0 -5793480 -3338720]
+ [       0        0        0     1881     1084        1 -1912977 -1102428]]
+                </pre>
             </div>
 
 
             <h3 class="text-xl font-semibold mt-6 mb-3">Recovered Homography Matrix $\mathbf{H}$</h3>
 
             <pre>
-// Example of the recovered 3x3 Homography Matrix (H)
 
-array([[ 4.61582404e-01, -3.46020861e-02,  1.42753140e+03],
-       [-2.02184026e-01,  7.84847105e-01,  2.75688043e+02],
-       [-1.36082873e-04, -9.75224682e-06,  1.00000000e+00]])
-            </pre>
+array([[ 4.61582404e-01, -3.46020861e-02,  1.42753140e+03],
+       [-2.02184026e-01,  7.84847105e-01,  2.75688043e+02],
+       [-1.36082873e-04, -9.75224682e-06,  1.00000000e+00]])
+            </pre>
 
-             <h3 class="text-xl font-semibold mb-3">Correspondence Visualization: street1\_cor to street3\_cor</h3>
+             <h3 class="text-xl font-semibold mb-3">Correspondence Visualization: Middle and Right</h3>
             <div class="grid md:grid-cols-2 gap-4 mb-4 border p-4 rounded-lg bg-gray-50">
                 <div class="space-y-2">
                     <img src="./res/street1_cor.png" alt="Image 1 with Correspondence Points" class="w-full rounded-md object-cover h-64">
-                    <p class="text-xs text-center text-gray-500">Image 1 (Source Points $\mathbf{p}_i$)</p>
+                    <p class="text-xs text-center text-gray-500">Image 1 Source Points</p>
                 </div>
                 <div class="space-y-2">
                     <img src="./res/street3_cor.png" alt="Image 2 with Correspondence Points" class="w-full rounded-md object-cover h-64">
-                    <p class="text-xs text-center text-gray-500">Image 2 (Destination Points $\mathbf{p}'_i$)</p>
+                    <p class="text-xs text-center text-gray-500">Image 2 Source Points</p>
                 </div>
             </div>
 
             <h3 class="text-xl font-semibold mt-6 mb-3">System of Equations</h3>
-            <p class="text-gray-700 mb-4">
-                For each correspondence $(\mathbf{p}_i, \mathbf{p}'_i)$, two linear equations are formed, contributing two rows to the matrix $\mathbf{A}$. With $N$ points, $\mathbf{A}$ is $2N \times 9$. We solve $\mathbf{A}\mathbf{h} = \mathbf{0}$ where $\mathbf{h}$ is the vectorized homography matrix.
-            </p>
             <div class="overflow-x-auto mb-4">
                 <pre>
-<!-- LaTeX for DLT equation system placeholder. Use $$...$$ in your final PDF document. -->
 System of Equations:
-[[    2137     1631        1        0        0        0 -1688230 -1288490]
- [       0        0        0     2137     1631        1 -3436296 -2622648]
- [    2132     1458        1        0        0        0 -1673620 -1144530]
- [       0        0        0     2132     1458        1 -3021044 -2065986]
- [    1962     1453        1        0        0        0 -1122264  -831116]
- [       0        0        0     1962     1453        1 -2762496 -2045824]
- [    2136     1445        1        0        0        0 -1687440 -1141550]
- [       0        0        0     2136     1445        1 -2994672 -2025890]
- [    1998     1411        1        0        0        0 -1234764  -871998]
- [       0        0        0     1998     1411        1 -2719278 -1920371]
- [    1753     1270        1        0        0        0  -506617  -367030]
- [       0        0        0     1753     1270        1 -2079058 -1506220]
- [    1777     1270        1        0        0        0  -579302  -414020]
- [       0        0        0     1777     1270        1 -2107522 -1506220]
- [    1676     1220        1        0        0        0  -300004  -218380]
- [       0        0        0     1676     1220        1 -1880472 -1368840]
- [    1991     1167        1        0        0        0 -1218492  -714204]
- [       0        0        0     1991     1167        1 -2164217 -1268529]
- [    2428     1129        1        0        0        0 -2736356 -1272383]
- [       0        0        0     2428     1129        1 -2627096 -1221578]
- [    2446     1129        1        0        0        0 -2803116 -1293834]
- [       0        0        0     2446     1129        1 -2646572 -1221578]
- [    1789     1143        1        0        0        0  -608260  -388620]
- [       0        0        0     1789     1143        1 -1862349 -1189863]
- [    1881     1084        1        0        0        0  -880308  -507312]
- [       0        0        0     1881     1084        1 -1845261 -1063404]]
-                </pre>
+[[    2137     1631        1        0        0        0 -1688230 -1288490]
+ [       0        0        0     2137     1631        1 -3436296 -2622648]
+ [    2132     1458        1        0        0        0 -1673620 -1144530]
+ [       0        0        0     2132     1458        1 -3021044 -2065986]
+ [    1962     1453        1        0        0        0 -1122264  -831116]
+ [       0        0        0     1962     1453        1 -2762496 -2045824]
+ [    2136     1445        1        0        0        0 -1687440 -1141550]
+ [       0        0        0     2136     1445        1 -2994672 -2025890]
+ [    1998     1411        1        0        0        0 -1234764  -871998]
+ [       0        0        0     1998     1411        1 -2719278 -1920371]
+ [    1753     1270        1        0        0        0  -506617  -367030]
+ [       0        0        0     1753     1270        1 -2079058 -1506220]
+ [    1777     1270        1        0        0        0  -579302  -414020]
+ [       0        0        0     1777     1270        1 -2107522 -1506220]
+ [    1676     1220        1        0        0        0  -300004  -218380]
+ [       0        0        0     1676     1220        1 -1880472 -1368840]
+ [    1991     1167        1        0        0        0 -1218492  -714204]
+ [       0        0        0     1991     1167        1 -2164217 -1268529]
+ [    2428     1129        1        0        0        0 -2736356 -1272383]
+ [       0        0        0     2428     1129        1 -2627096 -1221578]
+ [    2446     1129        1        0        0        0 -2803116 -1293834]
+ [       0        0        0     2446     1129        1 -2646572 -1221578]
+ [    1789     1143        1        0        0        0  -608260  -388620]
+ [       0        0        0     1789     1143        1 -1862349 -1189863]
+ [    1881     1084        1        0        0        0  -880308  -507312]
+ [       0        0        0     1881     1084        1 -1845261 -1063404]]
+                </pre>
             </div>
 
 
             <h3 class="text-xl font-semibold mt-6 mb-3">Recovered Homography Matrix $\mathbf{H}$</h3>
 
             <pre>
-// Example of the recovered 3x3 Homography Matrix (H)
-
 array([[ 2.26012095e+00, -2.57655728e-02, -3.48518988e+03],
-       [ 4.84186050e-01,  1.78586762e+00, -1.29814351e+03],
-       [ 3.19000577e-04, -2.05911307e-05,  1.00000000e+00]])
-            </pre>
+       [ 4.84186050e-01,  1.78586762e+00, -1.29814351e+03],
+       [ 3.19000577e-04, -2.05911307e-05,  1.00000000e+00]])
+            </pre>
 
         </section>
 
-        <!-- DELIVERABLE 3: Image Warping and Rectification -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-500 pl-3 py-1">Deliverable 3: Image Warping (Nearest Neighbor vs. Bilinear)</h2>
             <p class="text-gray-700 mb-6">
-                The functions `warpImageNearestNeighbor(im, H)` and `warpImageBilinear(im, H)` were implemented using inverse warping to perform image rectification. Inverse warping ensures that every pixel in the destination image is sampled from the source, avoiding holes.
+                Once you have the complete homography, you can project between the two images using the found H matrix or H inverse matrix. To properly do this, you must apply the inverse to the resulting image and interpolate to account for the extra information that is "created." This can be done by bilinear interpolation or nearest neighbor interpolation. Both are very accurate, producing good results that are not distronguishable by the untrained eye. We can also do this to perform rectifications. Not only can we map an image onto the plane of another image, but we can also select certain features, like rectangular ones, and transform them in a way that makes them more legible. 
             </p>
 
             <h3 class="text-xl font-semibold mb-3">Rectification Comparison: Nearest Neighbor vs. Bilinear</h3>
 
-            <!-- Rectification Example 1: Book -->
             <div class="border p-4 rounded-lg bg-gray-50 mb-6">
                 <h4 class="font-medium mb-3">Image 1 Rectification: Book</h4>
                 <div class="grid md:grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <img src="./res/book_nn.png" alt="Nearest Neighbor Rectification" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">NN Result (book\_nn)</p>
+                        <p class="text-xs text-center text-gray-500">NN Result</p>
                     </div>
                     <div class="space-y-2">
                         <img src="./res/book_bi.png" alt="Bilinear Interpolation Rectification" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500 font-medium">Bilinear Result (book\_bi)</p>
+                        <p class="text-xs text-center text-gray-500 font-medium">Bilinear Result</p>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Rectification Example 2: Tissue -->
             <div class="border p-4 rounded-lg bg-gray-50 mb-6">
                 <h4 class="font-medium mb-3">Image 2 Rectification: Tissue Box</h4>
                 <div class="grid md:grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <img src="./res/tissue_nn.png" alt="Nearest Neighbor Rectification" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">NN Result (tissue\_nn)</p>
+                        <p class="text-xs text-center text-gray-500">NN Result</p>
                     </div>
                     <div class="space-y-2">
                         <img src="./res/tissue_bi.png" alt="Bilinear Interpolation Rectification" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500 font-medium">Bilinear Result (tissue\_bi)</p>
+                        <p class="text-xs text-center text-gray-500 font-medium">Bilinear Result</p>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Rectification Example 3: Folder (NEW BLOCK) -->
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h4 class="font-medium mb-3">Image 3 Rectification: Folder</h4>
                 <div class="grid md:grid-cols-2 gap-4">
                     <div class="space-y-2">
                         <img src="./res/folder_nn.png" alt="Nearest Neighbor Rectification" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">NN Result (folder\_nn)</p>
+                        <p class="text-xs text-center text-gray-500">NN Result</p>
                     </div>
                     <div class="space-y-2">
                         <img src="./res/folder_bi.png" alt="Bilinear Interpolation Rectification" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500 font-medium">Bilinear Result (folder\_bi)</p>
+                        <p class="text-xs text-center text-gray-500 font-medium">Bilinear Result</p>
                     </div>
                 </div>
 
             </div>
         </section>
 
-        <!-- DELIVERABLE 4: Image Mosaics with Blending -->
         <section class="mb-12">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-500 pl-3 py-1">Deliverable 4: Image Mosaics and Blending</h2>
             <p class="text-gray-700 mb-6">
-                Three image mosaics were created by stitching together pairs of source images. Weighted averaging (feathering) was employed in the overlapping regions to significantly reduce visible edge artifacts and create a seamless transition between images.
+                Three image mosaics were created by stitching together pairs of source images. We do this by leaving the middle image the way it is and transforming the left and right images onto the middle image. Weighted averaging (feathering) was employed in the overlapping regions to significantly reduce visible edge artifacts and create a seamless transition between images.
             </p>
 
-            <!-- Mosaic Example 1 -->
             <div class="border p-4 rounded-lg bg-gray-50 mb-6">
                 <h3 class="text-xl font-semibold mb-3">Mosaic Example 1: First Mosaic</h3>
 
-                <div class="grid md:grid-cols-4 gap-4">
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
                     <div class="space-y-2">
                         <img src="./res/first_1.png" alt="Source Image first_1" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">Source 1 (first\_1)</p>
+                        <p class="text-xs text-center text-gray-500">Source 1</p>
                     </div>
                     <div class="space-y-2">
                         <img src="./res/first_2.png" alt="Source Image first_2" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">Source 2 (first\_2)</p>
+                        <p class="text-xs text-center text-gray-500">Source 2</p>
                     </div>
                     <div class="space-y-2">
                         <img src="./res/first_3.png" alt="Source Image first_3" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">Source 3 (first\_3)</p>
+                        <p class="text-xs text-center text-gray-500">Source 3</p>
                     </div>
-                    <div class="space-y-2">
-                        <img src="./res/first_mos.png" alt="Final Blended Mosaic 1" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500 font-medium">Final Mosaic (first\_mos)</p>
+                </div>
+                <div class="grid">
+                    <div class="space-y-2 md:col-span-full">
+                        <img src="./res/first_mos.png" alt="Final Blended Mosaic 1" class="w-full rounded-md object-cover h-auto">
+                        <p class="text-xs text-center text-gray-500 font-medium">Final Mosaic</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Mosaic Example 2 (Inserted Block) -->
             <div class="border p-4 rounded-lg bg-gray-50 mb-6">
                 <h3 class="text-xl font-semibold mb-3">Mosaic Example 2: Second Mosaic</h3>
 
-                <div class="grid md:grid-cols-4 gap-4">
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
                     <div class="space-y-2">
                         <img src="./res/second_1.png" alt="Source Image second_1" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">Source 1 (second\_1)</p>
+                        <p class="text-xs text-center text-gray-500">Source 1</p>
                     </div>
                     <div class="space-y-2">
                         <img src="./res/second_2.png" alt="Source Image second_2" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">Source 2 (second\_2)</p>
+                        <p class="text-xs text-center text-gray-500">Source 2</p>
                     </div>
                     <div class="space-y-2">
                         <img src="./res/second_3.png" alt="Source Image second_3" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">Source 3 (second\_3)</p>
+                        <p class="text-xs text-center text-gray-500">Source 3</p>
                     </div>
-                    <div class="space-y-2">
-                        <img src="./res/second_mos.png" alt="Final Blended Mosaic 2" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500 font-medium">Final Mosaic (second\_mos)</p>
+                </div>
+                <div class="grid">
+                    <div class="space-y-2 md:col-span-full">
+                        <img src="./res/second_mos.png" alt="Final Blended Mosaic 2" class="w-full rounded-md object-cover h-auto">
+                        <p class="text-xs text-center text-gray-500 font-medium">Final Mosaic</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Mosaic Example 3 (Inserted Block) -->
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="text-xl font-semibold mb-3">Mosaic Example 3: Third Mosaic</h3>
 
-                <div class="grid md:grid-cols-4 gap-4">
+                <div class="grid md:grid-cols-3 gap-4 mb-4">
                     <div class="space-y-2">
                         <img src="./res/third_1.png" alt="Source Image third_1" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">Source 1 (third\_1)</p>
+                        <p class="text-xs text-center text-gray-500">Source 1</p>
                     </div>
                     <div class="space-y-2">
                         <img src="./res/third_2.png" alt="Source Image third_2" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">Source 2 (third\_2)</p>
+                        <p class="text-xs text-center text-gray-500">Source 2</p>
                     </div>
                     <div class="space-y-2">
                         <img src="./res/third_3.png" alt="Source Image third_3" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500">Source 3 (third\_3)</p>
+                        <p class="text-xs text-center text-gray-500">Source 3</p>
                     </div>
-                    <div class="space-y-2">
-                        <img src="./res/third_mos.png" alt="Final Blended Mosaic 3" class="w-full rounded-md object-cover h-36">
-                        <p class="text-xs text-center text-gray-500 font-medium">Final Mosaic (third\_mos)</p>
+                </div>
+                <div class="grid">
+                    <div class="space-y-2 md:col-span-full">
+                        <img src="./res/third_mos.png" alt="Final Blended Mosaic 3" class="w-full rounded-md object-cover h-auto">
+                        <p class="text-xs text-center text-gray-500 font-medium">Final Mosaic</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Footer for Print/PDF Reference -->
         <footer class="mt-12 pt-4 border-t border-gray-200">
             <p class="text-xs text-center text-gray-500 no-print">
                 <span class="font-bold text-red-600">IMPORTANT:</span> When saving this page as a PDF (File > Print > Save as PDF), please ensure the "Headers and footers" option is enabled.
             </p>
-            <!-- This element is designed to display the URL/date only in the print view (PDF) -->
             <div class="print-url" data-url="[Your Github Pages URL Here]" data-date="[Current Date]"></div>
         </footer>
 
