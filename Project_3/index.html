@@ -102,9 +102,6 @@
                     <p class="text-xs text-center text-gray-500">Source Image: street3</p>
                 </div>
             </div>
-            <p class="text-sm text-gray-600 mt-4">
-                These pairs demonstrate the necessary overlap and visual distortion (perspective change) required to calculate the homography for image stitching.
-            </p>
         </section>
 
         <!-- DELIVERABLE 2: Homography Estimation (DLT) -->
@@ -138,10 +135,6 @@
                 </div>
             </div>
 
-            <p class="text-sm text-gray-600 mt-4">
-                The visualizations above show the corresponding points manually selected on the source and destination images (e.g., matching colors/labels).
-            </p>
-
             <h3 class="text-xl font-semibold mt-6 mb-3">System of Equations</h3>
             <p class="text-gray-700 mb-4">
                 For each correspondence $(\mathbf{p}_i, \mathbf{p}'_i)$, two linear equations are formed, contributing two rows to the matrix $\mathbf{A}$. With $N$ points, $\mathbf{A}$ is $2N \times 9$. We solve $\mathbf{A}\mathbf{h} = \mathbf{0}$ where $\mathbf{h}$ is the vectorized homography matrix.
@@ -165,9 +158,7 @@ where h = [h1, h2, h3, h4, h5, h6, h7, h8, h9]^T
 
 
             <h3 class="text-xl font-semibold mt-6 mb-3">Recovered Homography Matrix $\mathbf{H}$</h3>
-            <p class="text-gray-700 mb-4">
-                The solution $\mathbf{h}$ is the null-space of $\mathbf{A}$ (the eigenvector of $\mathbf{A}^T\mathbf{A}$ corresponding to the smallest eigenvalue), normalized by $h_9 = 1$.
-            </p>
+
             <pre>
 // Example of the recovered 3x3 Homography Matrix (H)
 
@@ -203,9 +194,7 @@ where h = [h1, h2, h3, h4, h5, h6, h7, h8, h9]^T
                         <p class="text-xs text-center text-gray-500 font-medium">Bilinear Result (book\_bi)</p>
                     </div>
                 </div>
-                <p class="text-sm text-gray-600 mt-4">
-                    **Comparison:** As demonstrated, bilinear interpolation produces a smoother, less blocky result, especially noticeable along edges, compared to the nearest neighbor approach which exhibits visible aliasing artifacts.
-                </p>
+
             </div>
 
             <!-- Rectification Example 2: Tissue -->
@@ -225,9 +214,7 @@ where h = [h1, h2, h3, h4, h5, h6, h7, h8, h9]^T
                         <p class="text-xs text-center text-gray-500 font-medium">Bilinear Result (tissue\_bi)</p>
                     </div>
                 </div>
-                <p class="text-sm text-gray-600 mt-4">
-                    **Comparison:** [Specific comparison comments for this image, perhaps noting that Bilinear is essential for fine textures or diagonal lines in the rectified output.]
-                </p>
+
             </div>
 
             <!-- Rectification Example 3: Folder (NEW BLOCK) -->
@@ -247,9 +234,7 @@ where h = [h1, h2, h3, h4, h5, h6, h7, h8, h9]^T
                         <p class="text-xs text-center text-gray-500 font-medium">Bilinear Result (folder\_bi)</p>
                     </div>
                 </div>
-                <p class="text-sm text-gray-600 mt-4">
-                    **Comparison:** [Specific comparison comments for this image.]
-                </p>
+
             </div>
         </section>
 
@@ -263,9 +248,6 @@ where h = [h1, h2, h3, h4, h5, h6, h7, h8, h9]^T
             <!-- Mosaic Example 1 -->
             <div class="border p-4 rounded-lg bg-gray-50 mb-6">
                 <h3 class="text-xl font-semibold mb-3">Mosaic Example 1: First Mosaic</h3>
-                <p class="text-sm text-gray-600 mb-4">
-                    **Procedure Explanation:** [Explain your procedure here, e.g., "The central image was chosen as the reference plane. The left and right images were warped to this plane using computed homographies $H_{L}$ and $H_{R}$. A linear weighting function $\alpha(x)$ was applied, where the final pixel color $I_{final}(x)$ is $\alpha(x) I_{warped}(x) + (1-\alpha(x)) I_{ref}(x)$, ensuring a smooth blend over the 50-pixel overlapping region."]
-                </p>
 
                 <div class="grid md:grid-cols-4 gap-4">
                     <div class="space-y-2">
@@ -290,9 +272,6 @@ where h = [h1, h2, h3, h4, h5, h6, h7, h8, h9]^T
             <!-- Mosaic Example 2 (Inserted Block) -->
             <div class="border p-4 rounded-lg bg-gray-50 mb-6">
                 <h3 class="text-xl font-semibold mb-3">Mosaic Example 2: Second Mosaic</h3>
-                <p class="text-sm text-gray-600 mb-4">
-                    **Procedure Explanation:** [Explain the warping/blending process for this specific mosaic, focusing on handling parallax error if present or noting a different blending technique (e.g., multiresolution blending).]
-                </p>
 
                 <div class="grid md:grid-cols-4 gap-4">
                     <div class="space-y-2">
@@ -317,9 +296,6 @@ where h = [h1, h2, h3, h4, h5, h6, h7, h8, h9]^T
             <!-- Mosaic Example 3 (Inserted Block) -->
             <div class="border p-4 rounded-lg bg-gray-50">
                 <h3 class="text-xl font-semibold mb-3">Mosaic Example 3: Third Mosaic</h3>
-                <p class="text-sm text-gray-600 mb-4">
-                    **Procedure Explanation:** [Explain the steps taken for this third mosaic, focusing on stabilization or handling large projective distortions and boundary cropping if applicable.]
-                </p>
 
                 <div class="grid md:grid-cols-4 gap-4">
                     <div class="space-y-2">
