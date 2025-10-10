@@ -119,7 +119,7 @@
 
             <h3 class="text-xl font-semibold mt-6 mb-3">System of Equations</h3>
             <p class="text-gray-700 mb-4">
-                For each correspondence two linear equations are formed, contributing two rows to the A. With N points, A is 2N x 9. We solve Ah = 0 where h is the vectorized homography matrix.
+                For each correspondence two linear equations are formed, contributing two rows to the A. With N points, A is 2N x 9. We solve Ah = b where h is the vectorized homography matrix and b is the points on the resulting plane.
             </p>
             <div class="overflow-x-auto mb-4">
                 <pre>
@@ -154,7 +154,7 @@ System of Equations:
             </div>
 
 
-            <h3 class="text-xl font-semibold mt-6 mb-3">Recovered Homography Matrix $\mathbf{H}$</h3>
+            <h3 class="text-xl font-semibold mt-6 mb-3">Recovered Homography Matrix</h3>
 
             <pre>
 
@@ -209,7 +209,7 @@ System of Equations:
             </div>
 
 
-            <h3 class="text-xl font-semibold mt-6 mb-3">Recovered Homography Matrix $\mathbf{H}$</h3>
+            <h3 class="text-xl font-semibold mt-6 mb-3">Recovered Homography Matrix</h3>
 
             <pre>
 array([[ 2.26012095e+00, -2.57655728e-02, -3.48518988e+03],
@@ -224,6 +224,29 @@ array([[ 2.26012095e+00, -2.57655728e-02, -3.48518988e+03],
             <p class="text-gray-700 mb-6">
                 Once you have the complete homography, you can project between the two images using the found H matrix or H inverse matrix. To properly do this, you must apply the inverse to the resulting image and interpolate to account for the extra information that is "created." This can be done by bilinear interpolation or nearest neighbor interpolation. Both are very accurate, producing good results that are not distronguishable by the untrained eye. We can also do this to perform rectifications. Not only can we map an image onto the plane of another image, but we can also select certain features, like rectangular ones, and transform them in a way that makes them more legible. 
             </p>
+
+            <h3 class="text-xl font-semibold mb-3">Projected Images</h3>
+
+            <div class="border p-4 rounded-lg bg-gray-50 mb-6">
+                <h4 class="font-medium mb-3">Middle to Left</h4>
+                <div class="grid md:grid-cols-1 gap-4">
+                    <div class="space-y-2">
+                        <img src="./res/middle_to_left.png" alt="Nearest Neighbor Rectification" class="w-full rounded-md object-cover h-36">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border p-4 rounded-lg bg-gray-50 mb-6">
+                <h4 class="font-medium mb-3">Middle to Right</h4>
+                <div class="grid md:grid-cols-1 gap-4">
+                    <div class="space-y-2">
+                        <img src="./res/middle_to_right.png" alt="Nearest Neighbor Rectification" class="w-full rounded-md object-cover h-36">
+                    </div>
+                </div>
+
+            </div>
+
 
             <h3 class="text-xl font-semibold mb-3">Rectification Comparison: Nearest Neighbor vs. Bilinear</h3>
 
