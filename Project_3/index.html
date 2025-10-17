@@ -381,36 +381,60 @@ array([[ 2.26012095e+00, -2.57655728e-02, -3.48518988e+03],
         <section class="mb-12">
             <h2 class="text-2xl font-bold text-gray-800 mb-4 border-l-4 border-indigo-500 pl-3 py-1">Deliverable 5: RANSAC-Based Panorama</h2>
             <p class="text-gray-700 mb-6">
-                To create a more robust panorama, the RANSAC (Random Sample Consensus) algorithm was used to estimate the homography matrix from automatically detected and matched feature points. This approach handles outliers (incorrect matches) much better than manually selecting correspondences. The pipeline involves **Harris Corner Detection**, **Adaptive Non-Maximal Suppression (ANMS)** for keypoint selection, feature description (e.g., SIFT or similar), and then **RANSAC** for robust homography calculation. The images below illustrate the key stages and the final automatic panorama.
+                To create a more robust panorama, the **RANSAC** (Random Sample Consensus) algorithm was used to estimate the homography matrix from automatically detected and matched feature points. This approach handles **outliers** (incorrect matches) much better than manually selecting correspondences. The pipeline involves **Harris Corner Detection**, **Adaptive Non-Maximal Suppression (ANMS)** for keypoint selection, feature description (e.g., SIFT or similar), and then RANSAC for robust homography calculation. The images below illustrate the key stages and the final automatic panorama.
             </p>
 
-            <h3 class="text-xl font-semibold mb-3">Feature Detection and Matching</h3>
+            <h3 class="text-xl font-semibold mb-3">Feature Detection and Keypoint Selection</h3>
 
-            <div class="grid md:grid-cols-3 gap-4 mb-6 border p-4 rounded-lg bg-gray-50">
-                <div class="space-y-2">
-                    <img src="./res/street1_1_harris.png" alt="Harris Corner Detection Result" class="w-full rounded-md object-cover h-36">
-                    <p class="text-xs text-center text-gray-500">Harris Corners</p>
-                </div>
-                <div class="space-y-2">
-                    <img src="./res/street1_1_anms.png" alt="Adaptive Non-Maximal Suppression Result" class="w-full rounded-md object-cover h-36">
-                    <p class="text-xs text-center text-gray-500">ANMS Keypoints</p>
-                </div>
-                <div class="space-y-2">
-                    <img src="./res/street1_feat.png" alt="Feature Descriptor Example" class="w-full rounded-md object-cover h-36">
-                    <p class="text-xs text-center text-gray-500">Feature Descriptors</p>
+            <div class="border p-4 rounded-lg bg-gray-50 mb-6">
+                <h4 class="font-medium mb-3">Harris Corners</h4>
+                <div class="grid md:grid-cols-1 gap-4">
+                    <div class="space-y-2">
+                        <img src="./res/street1_1_harris.png" alt="Harris Corner Detection Result" class="w-full rounded-md object-cover h-auto">
+                        <p class="text-xs text-center text-gray-500">Harris Corners</p>
+                    </div>
                 </div>
             </div>
 
-            <h3 class="text-xl font-semibold mb-3">Correspondence Visualization (RANSAC Input)</h3>
-
-            <div class="grid md:grid-cols-2 gap-4 mb-6 border p-4 rounded-lg bg-gray-50">
-                <div class="space-y-2">
-                    <img src="./res/street1_corr_2.png" alt="Image 1 Feature Correspondences" class="w-full rounded-md object-cover h-64">
-                    <p class="text-xs text-center text-gray-500">Image 1 Correspondences</p>
+            <div class="border p-4 rounded-lg bg-gray-50 mb-6">
+                <h4 class="font-medium mb-3">ANMS Keypoints</h4>
+                <div class="grid md:grid-cols-1 gap-4">
+                    <div class="space-y-2">
+                        <img src="./res/street1_1_anms.png" alt="Adaptive Non-Maximal Suppression Result" class="w-full rounded-md object-cover h-auto">
+                        <p class="text-xs text-center text-gray-500">ANMS Keypoints</p>
+                    </div>
                 </div>
-                <div class="space-y-2">
-                    <img src="./res/street1_corr_3.png" alt="Image 2 Feature Correspondences" class="w-full rounded-md object-cover h-64">
-                    <p class="text-xs text-center text-gray-500">Image 2 Correspondences</p>
+            </div>
+
+            <div class="border p-4 rounded-lg bg-gray-50 mb-6">
+                <h4 class="font-medium mb-3">Feature Descriptors</h4>
+                <div class="grid md:grid-cols-1 gap-4">
+                    <div class="space-y-2">
+                        <img src="./res/street1_feat.png" alt="Feature Descriptor Example" class="w-full rounded-md object-cover h-auto">
+                        <p class="text-xs text-center text-gray-500">Feature Descriptors</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Correspondence Visualization (RANSAC Input)</h3>
+
+            <div class="border p-4 rounded-lg bg-gray-50 mb-6">
+                <h4 class="font-medium mb-3">Image 1 Feature Correspondences</h4>
+                <div class="grid md:grid-cols-1 gap-4">
+                    <div class="space-y-2">
+                        <img src="./res/street1_corr_2.png" alt="Image 1 Feature Correspondences" class="w-full rounded-md object-cover h-auto">
+                        <p class="text-xs text-center text-gray-500">Image 1 Correspondences</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border p-4 rounded-lg bg-gray-50 mb-6">
+                <h4 class="font-medium mb-3">Image 2 Feature Correspondences</h4>
+                <div class="grid md:grid-cols-1 gap-4">
+                    <div class="space-y-2">
+                        <img src="./res/street1_corr_3.png" alt="Image 2 Feature Correspondences" class="w-full rounded-md object-cover h-auto">
+                        <p class="text-xs text-center text-gray-500">Image 2 Correspondences</p>
+                    </div>
                 </div>
             </div>
 
