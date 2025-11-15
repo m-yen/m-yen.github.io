@@ -69,11 +69,15 @@
         <div class="grid-container">
             <div class="grid-item">
                 <h3>Frustum Screenshot 1</h3>
-                <img src="./images/Many_views_rays.png" alt="Camera frustum visualization 1">
+                <img src="./images/duck_1.png" alt="Camera frustum visualization 1">
             </div>
             <div class="grid-item">
                 <h3>Frustum Screenshot 2</h3>
-                <img src="./images/Single_view_rays.png.png" alt="Camera frustum visualization 2">
+                <img src="./images/duck_2.png" alt="Camera frustum visualization 2">
+            </div>
+            <div class="grid-item">
+                <h3>Frustum Screenshot 3</h3>
+                <img src="./images/duck_3.png" alt="Camera frustum visualization 2">
             </div>
         </div>
     </div>
@@ -213,54 +217,102 @@ I tested on sizes width sizes 256 and 32 and positional encoding sizes of 2 and 
 
         <h3>Implementation Description</h3>
         <pre>
-**Ray Generation:** Function implemented using C2W matrix and intrinsics.
-**Sampling:** Hierarchical Volume Sampling used ($N_c$ coarse samples, $N_f$ fine samples).
-**Volume Rendering:** Implemented the full rendering equation: $C(r) = \sum T_i \cdot (1 - \exp(-\sigma_i \cdot \delta_i)) \cdot c_i$.
-        </pre>
+Camera to World - This was implemented using homogenous coordinates. I added a 4th dimensions to the 
+            camera coordinate vectors and left multipled by the c2w matrix which was given. 
+            I then removed the added 4th dimension to retreive the world coordinates. 
 
-        <h3>Rays and Samples Visualization (2 Photos)</h3>
+    Pixel to Camera - I calculated the conversion from image coordinates to camera coordinates by deriving
+            the formula from the matrix multiplication. Rewritten, we know:
+                x = (z / f_x) * (u - o_x)
+                y = (z / f_y) * (v - o_y)
+                z > 0
+
+            We choose to arbitrarily set Z to depth 1. This is acceptable since we sample 
+            along the ray in the z direcation later and integrate it out, so we can choose
+            the simplest Z for the calculation.
+
+            The o_x and o_y are set to half the width and half the height
+
+            f_x and f_y is just set to the focal length of the camera.
+
+    Pixel to Ray - Once the world coordinates can be recovered by converting from pixel to camera
+                    then to world, we want to turn the world coordinates into a ray so we can
+                    easily calculate depths for sampling.
+
+                    This is as simple as applying the formula given in the project spec.
+
+                    R0 is set to the translation component of the c2w matrix and Rd is set to
+                    a normalized difference of each world coordinate (x, y, z) and R0
+
+    
+    Sampling Rays - We next want to sample rays. This is simply done by converting all the pixels 
+                accross all pictures into rays, then simply randomly sampling. 
+
+
+    Sampling Along Rays - For inference, we sample 64 points along the ray using np.linspace. For
+                            training, we want to have points, and do this by adding small 
+                            pertibations. This was calculated by setting the distance long the ray
+                            t = t + (np.random(t.shape) * t_width)
+
+    Dataloader - We need to make a dataloader for training with Torch, so we create a seperate 
+                    dataset class for the NeRF. We conduct all the above except sampling to retreive
+                    the rays for all the pixels across all the images. We then set the len of the 
+                    dataset to be the number of rays and set the getItem function to be index the 
+                    desired rays and corresponding pixels from the data.
+
+    MLP Construction - I created a NN with 8 fully connected layers interlaced with ReLU activation
+                        functions. I also added the original input back into the 4th layer to 
+                        ensure information is not forgotten. From there I had two outputs, one for 
+                        the density parameter, and another 2 fully connected components for the 
+                        rgb output. We don't introduce Rd until after the 8 connected layers. I
+                        also used positional encoding of size 10 and 4 for the coordinates and rays.
+
+
+    Volumetric Rendering - This process is done by summing the colors along a ray. This is done in a
+                            forward to back fashion by multiplying every point on the ray the amount
+                            light that permeated through the previous layers. This is found by multiplying
+                            the color by 1 - torch.exp(-sigmas * step_size) and torch.exp(-torch.cumsum(offset, dim=1)).
+                            
+                            </pre>
+
+        <h3>Rays and Samples Visualization</h3>
         <p>Visualization of up to 100 rays and their sampled points with the camera poses:</p>
         <div class="grid-container">
             <div class="grid-item">
-                <h4>Viewpoint 1</h4>
-                <img src="path/to/rays_samples_vis_1.png" alt="Rays and samples visualization 1">
+                <h4>Many View Rays</h4>
+                <img src="./images/Many_views_rays.png" alt="Rays and samples visualization 1">
             </div>
             <div class="grid-item">
-                <h4>Viewpoint 2 (Different Angle)</h4>
-                <img src="path/to/rays_samples_vis_2.png" alt="Rays and samples visualization 2">
+                <h4>Single View Rays</h4>
+                <img src="./images/Single_view_rays.png" alt="Rays and samples visualization 2">
             </div>
         </div>
 
-        <h3>Training Progression Visualization (5 Photos)</h3>
+        <h3>Training Progression Visualization</h3>
         <p>Predicted images across 5 key iterations showing the NeRF learning the scene geometry and texture:</p>
         <div class="grid-4x5-row">
             <div class="grid-item">
-                <h4>Iter 1k</h4>
-                <img src="path/to/nerf_iter_1k.png" alt="NeRF Iteration 1k">
+                <img src="./images/lego_1.png" alt="NeRF Iteration 1k">
             </div>
             <div class="grid-item">
-                <h4>Iter 10k</h4>
-                <img src="path/to/nerf_iter_10k.png" alt="NeRF Iteration 10k">
+                <img src="./images/lego_2.png" alt="NeRF Iteration 10k">
             </div>
             <div class="grid-item">
-                <h4>Iter 50k</h4>
-                <img src="path/to/nerf_iter_50k.png" alt="NeRF Iteration 50k">
+                <img src="./images/lego_3.png" alt="NeRF Iteration 50k">
             </div>
             <div class="grid-item">
-                <h4>Iter 100k</h4>
-                <img src="path/to/nerf_iter_100k.png" alt="NeRF Iteration 100k">
+                <img src="./images/lego_4.png" alt="NeRF Iteration 100k">
             </div>
             <div class="grid-item">
-                <h4>Final</h4>
-                <img src="path/to/nerf_iter_final.png" alt="NeRF Final Result">
+                <img src="./images/lego_5.png" alt="NeRF Final Result">
             </div>
         </div>
 
         <h3>PSNR Curve on Validation Set</h3>
         <p>PSNR curve tracking the performance on the held-out validation images:</p>
-        <img src="path/to/psnr_curve_part2.png" alt="PSNR curve for NeRF training">
+        <img src="./images/lego_psnr.png" alt="PSNR curve for NeRF training">
 
-        <h3>Spherical Rendering Video (GIF)</h3>
+        <h3>Spherical Rendering Video</h3>
         <p>A GIF showing a full 360-degree render of the Lego object using test camera poses:</p>
         <img src="path/to/spherical_render.gif" alt="Spherical NeRF Render GIF">
     </div>
