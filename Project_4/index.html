@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Fields & Radiance Fields Project Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            max-width: 1200px; /* Increased max width for 5-in-a-row */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1, h2, h3, h4 {
+            color: #2c3e50;
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 15px;
+            border-left: 5px solid #3498db;
+            background-color: #f8f9fa;
+        }
+        .grid-container { /* Used for 2x2 comparison and other 2-column layouts */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .grid-4x5-group { /* Grouping container for a single 5-image row */
+            margin-top: 15px;
+            margin-bottom: 25px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        .grid-4x5-row { /* Actual container for 5 images in a line */
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            text-align: center;
+        }
+        .grid-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        img, video {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+        pre {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Project Results: Neural Fields and Radiance Fields</h1>
+
+    <div class="section">
+        <h2>Part 0: Camera Calibration and 3D Scanning</h2>
+        <p>Two screenshots of the camera frustums visualization in Viser:</p>
+        <div class="grid-container">
+            <div class="grid-item">
+                <h3>Frustum Screenshot 1</h3>
+                <img src="./images/Many_views_rays.png" alt="Camera frustum visualization 1">
+            </div>
+            <div class="grid-item">
+                <h3>Frustum Screenshot 2</h3>
+                <img src="./images/Single_view_rays.png.png" alt="Camera frustum visualization 2">
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="section">
+        <h2>Part 1: Fit a Neural Field to a 2D Image</h2>
+
+        <h3>Model Architecture Report</h3>
+        <pre>
+I used 4 fully connected layers interlaced with ReLU activation functions. I ended things with a 
+sigmoid layer to constrain the output to values in the range (0, 1). Each layer was 256 neurons wide
+and I used a learning rate of 1e-2. I used MSE loss and ran 14 epochs of batch sizes of 10,000, 
+which came out to slightly over 1,000 iterations.
+
+I tested on sizes width sizes 256 and 32 and positional encoding sizes of 2 and 10. 
+        </pre>
+
+        <h3>Original Photos</h3>
+        <div class="grid-container">
+            <div class="grid-item">
+                <h4>Daisy</h4>
+                <img src="./images/daisy.webp" alt="Daisy">
+            </div>
+            <div class="grid-item">
+                <h4>Wolf</h4>
+                <img src="./images/wolf.jpg" alt="PSNR curve for Wolf">
+            </div>
+        </div>
+
+        <h3>PSNR/Loss Curves</h3>
+        <p>Graphs tracking the training performance of the photos:</p>
+        <div class="grid-container">
+            <div class="grid-item">
+                <h4>PSNR Curve Daisy</h4>
+                <img src="./images/daisy_train_curve.png" alt="PSNR curve for Daisy">
+            </div>
+            <div class="grid-item">
+                <h4>PSNR Curve Wolf</h4>
+                <img src="./images/wolf_train_curve.png" alt="PSNR curve for Wolf">
+            </div>
+        </div>
+
+        
+        <h3>Final Results: 4 Sets of 5 Images (Single Configuration View)</h3>
+        <p>Detailed view of results for each configuration (Input, GT, Prediction, Difference, Feature Map):</p>
+        
+        <div class="grid-4x5-group">
+            <h4>Configuration 1: $L=10, W=256$</h4>
+            <div class="grid-4x5-row">
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_1.png" alt="Input Image 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_2.png" alt="Ground Truth 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_3.png" alt="Prediction 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_4.png" alt="Difference Map 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_5.png" alt="Feature Map 1"></div>
+            </div>
+        </div>
+        
+        <div class="grid-4x5-group">
+            <h4>Configuration 2: $L=2, W=256$</h4>
+            <div class="grid-4x5-row">
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_1.png" alt="Input Image 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_2.png" alt="Ground Truth 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_3.png" alt="Prediction 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_4.png" alt="Difference Map 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_5.png" alt="Feature Map 1"></div>
+            </div>
+        </div>
+        
+        <div class="grid-4x5-group">
+            <h4>Configuration 3: $L=10, W=32$</h4>
+            <div class="grid-4x5-row">
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_32_1.png" alt="Input Image 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_32_2.png" alt="Ground Truth 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_32_3.png" alt="Prediction 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_32_4.png" alt="Difference Map 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_10_32_5.png" alt="Feature Map 1"></div>
+            </div>
+        </div>
+
+        <div class="grid-4x5-group">
+            <h4>Configuration 4: $L=2, W=32$</h4>
+            <div class="grid-4x5-row">
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_32_1.png" alt="Input Image 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_32_2.png" alt="Ground Truth 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_32_3.png" alt="Prediction 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_32_4.png" alt="Difference Map 1"></div>
+                <div class="grid-item"><h5></h5><img src="./images/wolf_2_32_5.png" alt="Feature Map 1"></div>
+            </div>
+        </div>
+
+        <h3>Final Results (2x2 Grid Comparison)</h3>
+        <p>Comparison of the final prediction for each configuration ($L$, $W$) on one image of your choice:</p>
+        <div class="grid-container">
+            <div class="grid-item">
+                <h4>Config 1: $L=10, W=256$</h4>
+                <img src="./images/wolf_10_5.png" alt="2x2 Comparison Result 1">
+            </div>
+            <div class="grid-item">
+                <h4>Config 2: $L=2, W=256$</h4>
+                <img src="./images/wolf_2_5.png" alt="2x2 Comparison Result 2">
+            </div>
+            <div class="grid-item">
+                <h4>Config 3: $L=10, W=32$</h4>
+                <img src="./images/wolf_10_32_5.png" alt="2x2 Comparison Result 3">
+            </div>
+            <div class="grid-item">
+                <h4>Config 4: $L=2, W=32$</h4>
+                <img src="./images/wolf_2_32_5.png" alt="2x2 Comparison Result 4">
+            </div>
+        </div>
+        
+        <h3>Final PSNR</h3>
+        <div class="grid-container">
+            <div class="grid-item">
+                <img src="./images/wolf_confusion_matrix.png" alt="Confusion Matrix">
+            </div>
+        </div>
+
+        <div class="grid-4x5-group">
+            <h4>Daisy Training Progression</h4>
+            <div class="grid-4x5-row">
+                <div class="grid-item"><h5></h5><img src="./images/daisy1.png" alt="Input Image 4"></div>
+                <div class="grid-item"><h5></h5><img src="./images/daisy2.png" alt="Ground Truth 4"></div>
+                <div class="grid-item"><h5></h5><img src="./images/daisy3.png" alt="Prediction 4"></div>
+                <div class="grid-item"><h5></h5><img src="./images/daisy4.png" alt="Difference Map 4"></div>
+                <div class="grid-item"><h5></h5><img src="./images/daisy5.png" alt="Feature Map 4"></div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="section">
+        <h2>Part 2: Fit a Neural Radiance Field (NeRF)</h2>
+
+        <h3>Implementation Description</h3>
+        <pre>
+**Ray Generation:** Function implemented using C2W matrix and intrinsics.
+**Sampling:** Hierarchical Volume Sampling used ($N_c$ coarse samples, $N_f$ fine samples).
+**Volume Rendering:** Implemented the full rendering equation: $C(r) = \sum T_i \cdot (1 - \exp(-\sigma_i \cdot \delta_i)) \cdot c_i$.
+        </pre>
+
+        <h3>Rays and Samples Visualization (2 Photos)</h3>
+        <p>Visualization of up to 100 rays and their sampled points with the camera poses:</p>
+        <div class="grid-container">
+            <div class="grid-item">
+                <h4>Viewpoint 1</h4>
+                <img src="path/to/rays_samples_vis_1.png" alt="Rays and samples visualization 1">
+            </div>
+            <div class="grid-item">
+                <h4>Viewpoint 2 (Different Angle)</h4>
+                <img src="path/to/rays_samples_vis_2.png" alt="Rays and samples visualization 2">
+            </div>
+        </div>
+
+        <h3>Training Progression Visualization (5 Photos)</h3>
+        <p>Predicted images across 5 key iterations showing the NeRF learning the scene geometry and texture:</p>
+        <div class="grid-4x5-row">
+            <div class="grid-item">
+                <h4>Iter 1k</h4>
+                <img src="path/to/nerf_iter_1k.png" alt="NeRF Iteration 1k">
+            </div>
+            <div class="grid-item">
+                <h4>Iter 10k</h4>
+                <img src="path/to/nerf_iter_10k.png" alt="NeRF Iteration 10k">
+            </div>
+            <div class="grid-item">
+                <h4>Iter 50k</h4>
+                <img src="path/to/nerf_iter_50k.png" alt="NeRF Iteration 50k">
+            </div>
+            <div class="grid-item">
+                <h4>Iter 100k</h4>
+                <img src="path/to/nerf_iter_100k.png" alt="NeRF Iteration 100k">
+            </div>
+            <div class="grid-item">
+                <h4>Final</h4>
+                <img src="path/to/nerf_iter_final.png" alt="NeRF Final Result">
+            </div>
+        </div>
+
+        <h3>PSNR Curve on Validation Set</h3>
+        <p>PSNR curve tracking the performance on the held-out validation images:</p>
+        <img src="path/to/psnr_curve_part2.png" alt="PSNR curve for NeRF training">
+
+        <h3>Spherical Rendering Video (GIF)</h3>
+        <p>A GIF showing a full 360-degree render of the Lego object using test camera poses:</p>
+        <img src="path/to/spherical_render.gif" alt="Spherical NeRF Render GIF">
+    </div>
+
+</body>
+</html>
