@@ -32,7 +32,18 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Overall Quality and Parameter Comparison</h2>
             <p class="text-base text-gray-700 p-3 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] leading-relaxed">
                 <span class="font-bold">Summary Reflections:</span> Use this space to describe the overall quality of the outputs across all four conditions (Small/Large size, 10/20 inference steps). 
-                Specifically, analyze the differences observed between the two image sizes and how increasing the $\text{num\_inference\_steps}$ from 10 to 20 affected the coherence, detail, and quality of the generated images for each of the three prompts.
+                When creating the embeddings, you will see tensors like this: 
+                tensor([[[-0.0322, -0.0893,  0.0569,  ...,  0.0608, -0.0345,  0.0080],
+         [ 0.0350,  0.0930, -0.0676,  ...,  0.1038, -0.1740, -0.0928],
+         [-0.0583,  0.1975,  0.0878,  ...,  0.1200, -0.0617, -0.0642],
+         ...,
+         [ 0.0479,  0.1035,  0.0232,  ...,  0.1868, -0.1043, -0.1133],
+         [ 0.0479,  0.1035,  0.0232,  ...,  0.1868, -0.1043, -0.1133],
+         [ 0.0479,  0.1035,  0.0232,  ...,  0.1868, -0.1043, -0.1133]]],
+       dtype=torch.float16).
+                Below you can see 3 images produced for 3 different prompts for different number of inference steps and different resolutions.
+                You can see that the more inference steps, the better the image quality. The resolution may seem to have an impact on quality, but this
+                is because of upscaling for presentation purposes.
             </p>
         </section>
         <!-- END CONSOLIDATED REFLECTION SECTION -->
@@ -46,7 +57,7 @@
                     <!-- Output 1 --><div class="p-4 border rounded-lg shadow-sm">
                         <p class="font-semibold mb-2 text-indigo-700">Prompt 1:</p>
                         <p class="text-xs italic text-gray-700 mb-3 font-mono bg-gray-100 p-2 rounded h-16 overflow-hidden">
-                            A hyper-realistic photograph of a lone, ancient lighthouse on a rugged cliff overlooking a neon purple ocean at sunset, cinematic lighting, 8k.
+                            an oil painting of a glass of wine
                         </p>
                         <!-- Actual Photo Placement - SRC will be set by JS --><div class="rounded-lg mb-3 overflow-hidden border border-gray-200 aspect-video image-container">
                             <img src="" 
@@ -58,7 +69,7 @@
                     <!-- Output 2 --><div class="p-4 border rounded-lg shadow-sm">
                         <p class="font-semibold mb-2 text-indigo-700">Prompt 2:</p>
                         <p class="text-xs italic text-gray-700 mb-3 font-mono bg-gray-100 p-2 rounded h-16 overflow-hidden">
-                            A whimsical watercolor illustration of a group of friendly space aliens playing chess on the surface of the moon, stylized, low detail.
+                            an oil painting of a mountain range
                         </p>
                         <!-- Actual Photo Placement - SRC will be set by JS --><div class="rounded-lg mb-3 overflow-hidden border border-gray-200 aspect-video image-container">
                             <img src="" 
@@ -70,7 +81,7 @@
                     <!-- Output 3 --><div class="p-4 border rounded-lg shadow-sm">
                         <p class="font-semibold mb-2 text-indigo-700">Prompt 3:</p>
                         <p class="text-xs italic text-gray-700 mb-3 font-mono bg-gray-100 p-2 rounded h-16 overflow-hidden">
-                            A minimalist abstract sculpture made of polished stainless steel, reflecting a bustling cityscape, high contrast, black and white.
+                            a painting of a bird head
                         </p>
                         <!-- Actual Photo Placement - SRC will be set by JS --><div class="rounded-lg mb-3 overflow-hidden border border-gray-200 aspect-video image-container">
                             <img src="" 
@@ -89,10 +100,10 @@
 
     <script>
         const sections = [
-            { title: "Size 1, $\\text{num\\_inference\\_steps}=10$", size_label: "1", size_display: "Size 1", steps: 10 },
-            { title: "Size 2, $\\text{num\\_inference\\_steps}=10$", size_label: "2", size_display: "Size 2", steps: 10 },
-            { title: "Size 1, $\\text{num\\_inference\\_steps}=20$", size_label: "1", size_display: "Size 1", steps: 20 },
-            { title: "Size 2, $\\text{num\\_inference\\_steps}=20$", size_label: "2", size_display: "Size 2", steps: 20 },
+            { title: "Size 1, 10 Inference Steps", size_label: "1", size_display: "Size 1", steps: 10 },
+            { title: "Size 2, 10 Inference Steps", size_label: "2", size_display: "Size 2", steps: 10 },
+            { title: "Size 1, 20 Inference Steps", size_label: "1", size_display: "Size 1", steps: 20 },
+            { title: "Size 2, 20 Inference Steps", size_label: "2", size_display: "Size 2", steps: 20 },
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -114,7 +125,7 @@
                     
                     // 1. Construct the file path
                     const imageSizeName = data.size_label; // '1' or '2'
-                    const fileName = `./output_images/stage_${imageSizeName}_sample${sampleIndex}_${data.steps}.png`;
+                    const fileName = `./output_images/stage_${imageSizeName}_sample_${sampleIndex}_${data.steps}.png`;
 
                     // 2. Set the image source
                     img.src = fileName;
