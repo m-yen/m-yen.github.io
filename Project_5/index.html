@@ -23,7 +23,7 @@
             <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Image Generation and Embedding Report</h1>
             <p class="text-lg text-gray-600">Comparison of Image Size and Inference Steps</p>
             <div class="mt-4 text-sm font-mono p-2 bg-yellow-100 text-yellow-800 rounded-lg inline-block shadow-inner">
-                <span class="font-bold">Project Random Seed: 428751</span>
+                <span class="font-bold">Project Random Seed: 27</span>
             </div>
         </header>
 
@@ -43,7 +43,9 @@
        dtype=torch.float16).
                 Below you can see 3 images produced for 3 different prompts for different number of inference steps and different resolutions.
                 You can see that the more inference steps, the better the image quality. The resolution may seem to have an impact on quality, but this
-                is because of upscaling for presentation purposes.
+                is because of upscaling for presentation purposes. You can see how a larger number of inference steps allows for more detail and arguably a better 
+                image. For example, the wine glass has much more texture and the scene has more detail. Likewise, for the bird and mountain, they add more lines and 
+                "information" as the steps increase.
             </p>
         </section>
         <!-- END CONSOLIDATED REFLECTION SECTION -->
