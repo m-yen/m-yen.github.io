@@ -1602,6 +1602,170 @@
         </div>
     </section>
 
+    <section class="bg-white p-6 rounded-xl shadow-xl mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Part B: Overview
+        </h2>
+
+        <!-- Brief Introduction Text -->
+        <p class="text-gray-700 leading-relaxed mb-6">
+            <!-- Replace this with your own introduction -->
+            We now switch gears and focus on building a flow model to generate images of numbers 
+            using the MNIST dataset.
+        </p>
+
+        <p class="text-gray-700 leading-relaxed mb-6">
+            <!-- Replace this with your own introduction -->
+            First we need to add noise to the train set to teach a Unet to undo noise.
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/noisy_image.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Example image with varying amounts of noise
+        </p>
+    </section>
+
+    <section class="bg-white p-6 rounded-xl shadow-xl mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Training Basic Unet
+        </h2>
+
+        <!-- Brief Introduction Text -->
+        <p class="text-gray-700 leading-relaxed mb-6">
+            <!-- Replace this with your own introduction -->
+            Below you can see the train curve of a Unet applied to the noisy mnist dataset.
+            You can also see samples of denoising after the first and 5th epochs. 
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/basic_unet_train_curve.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Train Curve
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/epoch_1_basic_samples.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 1 Train Samples
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/epoch_5_basic_samples.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 5 Train Samples
+        </p>
+
+    </section>
+
+
+    <section class="bg-white p-6 rounded-xl shadow-xl mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Out of Distribution Testing
+        </h2>
+
+        <!-- Brief Introduction Text -->
+        <p class="text-gray-700 leading-relaxed mb-6">
+            <!-- Replace this with your own introduction -->
+            Here are demonstartions of the model trained on 0.5 noise performing
+            on various other noises 
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/sig_0_ood.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            0 Noise
+        </p>
+
+                <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/sig_02_ood.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            0.2 Noise
+        </p>
+
+                <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/sig_04_ood.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            0.4 Noise
+        </p>
+
+                <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/sig_06_ood.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            0.6 Noise
+        </p>
+
+
+                <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/sig_08_ood.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            0.8 Noise
+        </p>
+
+
+        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/sig_10_ood.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            1.0 Noise
+        </p>
+
+    </section>
+
 
 </body>
 </html>
