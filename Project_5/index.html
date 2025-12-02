@@ -31,7 +31,6 @@
         <section class="bg-white p-6 rounded-xl shadow-xl mb-10">
             <h2 class="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">Overall Quality and Parameter Comparison</h2>
             <p class="text-base text-gray-700 p-3 bg-gray-50 rounded-lg border border-gray-200 min-h-[100px] leading-relaxed">
-                <span class="font-bold">Summary Reflections:</span> Use this space to describe the overall quality of the outputs across all four conditions (Small/Large size, 10/20 inference steps). 
                 When creating the embeddings, you will see tensors like this: 
                 tensor([[[-0.0322, -0.0893,  0.0569,  ...,  0.0608, -0.0345,  0.0080],
          [ 0.0350,  0.0930, -0.0676,  ...,  0.1038, -0.1740, -0.0928],
@@ -1641,7 +1640,8 @@
         <p class="text-gray-700 leading-relaxed mb-6">
             <!-- Replace this with your own introduction -->
             Below you can see the train curve of a Unet applied to the noisy mnist dataset.
-            You can also see samples of denoising after the first and 5th epochs. 
+            You can also see samples of denoising after the first and 5th epochs.
+            Train data as 0.5 sigma noise.
         </p>
 
         <!-- Wide Composite Image -->
@@ -1657,7 +1657,7 @@
         </p>
 
         <!-- Wide Composite Image -->
-        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
             <img src="./output_images/epoch_1_basic_samples.png"
                 alt="Composite image made of 5 sub-images"
                 class="w-full h-auto object-contain">
@@ -1669,7 +1669,7 @@
         </p>
 
         <!-- Wide Composite Image -->
-        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
             <img src="./output_images/epoch_5_basic_samples.png"
                 alt="Composite image made of 5 sub-images"
                 class="w-full h-auto object-contain">
@@ -1696,7 +1696,7 @@
         </p>
 
         <!-- Wide Composite Image -->
-        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
             <img src="./output_images/sig_0_ood.png"
                 alt="Composite image made of 5 sub-images"
                 class="w-full h-auto object-contain">
@@ -1707,7 +1707,7 @@
             0 Noise
         </p>
 
-                <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+                <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
             <img src="./output_images/sig_02_ood.png"
                 alt="Composite image made of 5 sub-images"
                 class="w-full h-auto object-contain">
@@ -1718,7 +1718,7 @@
             0.2 Noise
         </p>
 
-                <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+                <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
             <img src="./output_images/sig_04_ood.png"
                 alt="Composite image made of 5 sub-images"
                 class="w-full h-auto object-contain">
@@ -1729,7 +1729,7 @@
             0.4 Noise
         </p>
 
-                <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+                <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
             <img src="./output_images/sig_06_ood.png"
                 alt="Composite image made of 5 sub-images"
                 class="w-full h-auto object-contain">
@@ -1741,7 +1741,7 @@
         </p>
 
 
-                <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+                <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
             <img src="./output_images/sig_08_ood.png"
                 alt="Composite image made of 5 sub-images"
                 class="w-full h-auto object-contain">
@@ -1753,7 +1753,7 @@
         </p>
 
 
-        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
             <img src="./output_images/sig_10_ood.png"
                 alt="Composite image made of 5 sub-images"
                 class="w-full h-auto object-contain">
@@ -1765,7 +1765,311 @@
         </p>
 
     </section>
+    
+    <section class="bg-white p-6 rounded-xl shadow-xl mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Training Basic Unet on Pure Noise
+        </h2>
 
+        <!-- Brief Introduction Text -->
+        <p class="text-gray-700 leading-relaxed mb-6">
+            <!-- Replace this with your own introduction -->
+            Below is the training of the unet on pure noise, generating new images.
+            You can see the train curve and samples after the 1st and 5th epochs. 
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/pure_noise_unet_train_curve.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Train Curve
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/epoch_1_pure_noise_samples.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 1 Train Samples
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/epoch_5_pure_noise_samples.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 5 Train Samples
+        </p>
+
+
+        <p class="text-gray-700 leading-relaxed mb-6">
+            <!-- Replace this with your own introduction -->
+            The result are very blurry images that seems to resemble a mixture of numbers.
+            This makes sense. Because the model is given noise and tries to predict numbers,
+            to optimize over many images, it is best to create a "generic" number that is 
+            somewhat close to all the numbers. Hence you get the hybrid image.
+        </p>
+
+    </section>
+
+
+    <section class="bg-white p-6 rounded-xl shadow-xl mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Training Flow Unet
+        </h2>
+
+        <!-- Brief Introduction Text -->
+        <p class="text-gray-700 leading-relaxed mb-6">
+            <!-- Replace this with your own introduction -->
+            Below is the training of the Flow model. As t increases, more noise is added 
+            and denoised by the model. You can see the train curve and samples
+            after the 1st, 5th, and 10th epochs. 
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/flow_model_train_curve.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Train Curve
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/flow_epoch_1.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 1 Train Samples
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/flow_epoch_5.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 5 Train Samples
+        </p>
+
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/flow_epoch_10.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 10 Train Samples
+        </p>
+
+    </section>
+
+
+    <section class="bg-white p-6 rounded-xl shadow-xl mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Training Class Conditional Flow Unet
+        </h2>
+
+        <!-- Brief Introduction Text -->
+        <p class="text-gray-700 leading-relaxed mb-6">
+            <!-- Replace this with your own introduction -->
+            We now try also conditioning on the digit class. This allows us to generate 
+            images of particular digits as well as gives the model enough information to 
+            have higher quality. Below you can see the train curve and samples after 
+            the 1st, 5th, and 10th epoch of training.
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_flow_train_curve.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Train Curve
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_0_1.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_0_2.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_0_3.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+
+                <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_0_4.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 1 Train Samples
+        </p>
+
+
+
+                <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_1_1.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_1_2.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_1_3.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+
+                <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_1_4.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 5 Train Samples
+        </p>
+
+
+
+
+                <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_2_1.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_2_2.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_2_3.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+
+                <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/class_2_4.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 10 Train Samples
+        </p>
+
+    </section>
+
+
+
+
+    <section class="bg-white p-6 rounded-xl shadow-xl mb-10">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">
+            Training Class Conditional Flow Unet Without Schedueler
+        </h2>
+
+        <!-- Brief Introduction Text -->
+        <p class="text-gray-700 leading-relaxed mb-6">
+            <!-- Replace this with your own introduction -->
+            We can remove the Schedueler from our training loop by increasing the number
+            of time steps in our process. With more t, we get more granular control and 
+            can therefore learn the flow quicker.
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/sche_curve.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Train Curve
+        </p>
+
+        <!-- Wide Composite Image -->
+        <div class="mx-auto max-w-xl rounded-xl overflow-hidden border border-gray-200 shadow-lg">
+            <img src="./output_images/sche.png"
+                alt="Composite image made of 5 sub-images"
+                class="w-full h-auto object-contain">
+        </div>
+
+        <!-- Optional Caption -->
+        <p class="text-sm text-gray-600 text-center mt-2 italic">
+            Epoch 10 Train Samples
+        </p>
+
+    </section>
 
 </body>
 </html>
